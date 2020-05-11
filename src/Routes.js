@@ -15,6 +15,13 @@ import RegisterPage from './Pages/Register'
 import SystemsPage from './Pages/Systems'
 import CreateSystemPage from './Pages/CreateSystem'
 import HomeSystemPage from './Pages/HomeSystem'
+import AllNewsPage from './Pages/AllNews'
+import CreateNewsPage from './Pages/CreateNews'
+import CreateNewsTypePage from './Pages/CreateNewsType'
+import AlTargetGroupPage from './Pages/AllTargetGroup'
+import CreateTargetGroupPage from './Pages/CreateTargetGroup'
+import DashboardPage from './Pages/Dashboard'
+import AllTargetGroupPage from './Pages/AllTargetGroup';
 export default function Routes() {
     return (
         <Router>
@@ -24,6 +31,13 @@ export default function Routes() {
                 <Route path="/systems" render={(props) => <SystemsPage {...props}/>} />
                 <Route path="/system/create" render={(props) => <CreateSystemPage {...props}/>} />
                 <Route path="/:system/:systemid/home" render={(props) => <HomeSystemPage {...props}/>} />
+                <Route path="/:system/:systemid/news/allnews" render={(props) => <AllNewsPage {...props}/>} />
+                <Route path="/:system/:systemid/news/createnews" render={(props) => <CreateNewsPage {...props}/>} />
+                <Route path="/:system/:systemid/news/createnewstype" render={(props) => <CreateNewsTypePage {...props}/>} />
+                <Route path="/:system/:systemid/targetgroup/alltargetgroup" render={(props) => <AllTargetGroupPage {...props}/>} />
+                <Route path="/:system/:systemid/targetgroup/createtargetgroup" render={(props) => <CreateTargetGroupPage {...props}/>} />
+                <Route path="/:system/:systemid/dashboard" render={(props) => <DashboardPage {...props}/>} />
+                <Route path="/test" render={(props) => <Layout {...props}/>} />
                 <Route render={() => <Redirect push to="/login" />} />
             </Switch>
         </Router>

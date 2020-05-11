@@ -1,14 +1,14 @@
 import React from 'react'
 import Layout from '../Components/Layout'
-class HomeSystemPage extends React.Component {
+class CreateNewsPage extends React.Component {
     constructor(props) {
         super(props) 
         this.state = {
             data: {
                 system: "",
                 systemid: 0,
-                pageType: "",
-                page: "home",
+                pageType: "news",
+                page: "createnews",
             }
         }
     }
@@ -26,10 +26,10 @@ class HomeSystemPage extends React.Component {
     render() {
         return (
             <Layout {...this.props} data={this.state.data}>
-                <h1>{this.state.data.system}</h1>
+                <h1>Create news</h1>
             </Layout>
         )
     }
 }
 
-export default HomeSystemPage
+export default CreateNewsPage

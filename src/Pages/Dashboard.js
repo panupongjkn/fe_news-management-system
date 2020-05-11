@@ -1,6 +1,6 @@
 import React from 'react'
 import Layout from '../Components/Layout'
-class HomeSystemPage extends React.Component {
+class DashboardPage extends React.Component {
     constructor(props) {
         super(props) 
         this.state = {
@@ -8,7 +8,7 @@ class HomeSystemPage extends React.Component {
                 system: "",
                 systemid: 0,
                 pageType: "",
-                page: "home",
+                page: "dashboard",
             }
         }
     }
@@ -26,10 +26,10 @@ class HomeSystemPage extends React.Component {
     render() {
         return (
             <Layout {...this.props} data={this.state.data}>
-                <h1>{this.state.data.system}</h1>
+                <h1>Dashboard</h1>
             </Layout>
         )
     }
 }
 
-export default HomeSystemPage
+export default DashboardPage

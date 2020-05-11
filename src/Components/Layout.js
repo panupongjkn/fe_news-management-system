@@ -1,217 +1,112 @@
 import React from 'react'
-import withAuth from '../HOC/withAuth'
+import { Link, Redirect } from 'react-router-dom'
 import styled from 'styled-components'
-import { Layout, Menu } from 'antd';
-import {
-    AreaChartOutlined,
-    HomeOutlined,
-    ReadOutlined,
-    NotificationOutlined,
-    PlusOutlined,
-    TeamOutlined,
-} from '@ant-design/icons';
 import Navbar from './Navbar'
-import { Link } from 'react-router-dom'
 
-const { Sider } = Layout;
+import { Layout, Menu, Breadcrumb } from 'antd';
+import {
+    DesktopOutlined,
+    PieChartOutlined,
+    FileOutlined,
+    TeamOutlined,
+    UserOutlined,
+} from '@ant-design/icons';
+
+const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-
-const LinkMenuItem = styled(Link)`
-    color: ${props => props.selected ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0.65)"};
+const Test = styled.div`
+    color: red;
     &:hover {
-        color: rgba(255, 255, 255, 1);
-    }
-    
-    `
-const LinkLogo = styled(Link)`
-    color: white;
-    &:hover {
-        color: rgba(255, 255, 255, 1);
+        color: green;
     }
 `
-class LayoutPage extends React.Component {
+class SiderDemo extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: 'wait',
-            system: '',
-            systemid: '',
-            typePage: '',
-            page: '',
             collapsed: false,
-        }
+            page: "",
+            pageType: "",
+            system: "",
+            systemid: 0,
+            data: "wait",
+            redirect: false,
+            path: "",
+        };
     }
+
+    setData = async () => {
+        console.log("data", this.props.data)
+        let data = this.props.data
+        this.setState({
+            page: data.page,
+            pageType: data.pageType,
+            system: data.system,
+            systemid: data.systemid,
+        })
+    }
+
     async componentWillMount() {
-        const { system, systemid } = this.props.match.params
-        await this.setState({ system: system, systemid: systemid })
-        let path = this.props.location.pathname + "";
-        let page = '';
-        let typePage = '';
-        if (path.substring(this.state.system.length+this.state.systemid.length + 2) === "/home") {
-            page = 'home'
-        } else
-            if (path.substring(this.state.system.length+this.state.systemid.length + 2) === "/dashboard") {
-                page = 'dashboard'
-            } else
-                if (path.substring(this.state.system.length+this.state.systemid.length + 2, this.state.system.length+this.state.systemid.length + 7) === "/news") {
-                    page = path.substring(this.state.system.length+this.state.systemid.length + 8)
-                    typePage = 'news'
-                } else
-                    if (path.substring(this.state.system.length +this.state.systemid.length + 2, this.state.system.length +this.state.systemid.length + 14) === "/targetgroup") {
-                        page = path.substring(this.state.system.length +this.state.systemid.length + 15)
-                        typePage = 'targetgroup'
-                    }
-        await this.setState({ typePage: typePage, page: page, data: "ready" })
-        console.log(this.state)
+        await this.setData()
     }
+
     onCollapse = collapsed => {
         console.log(collapsed);
         this.setState({ collapsed });
     };
-    onChangePage = (page, typePage) => {
-        this.setState({ typePage: typePage, page: page, data: "ready" })
-    }
-    onLogout = () => {
-        localStorage.clear()
-    }
+
     render() {
         return (
-            <div>
-                {this.state.data === "ready" ?
-                    <Layout>
-                        <Navbar page={this.state.page} style={{ position: 'fixed', zIndex: 1, }} />
-                        <Sider
-                            className={`justify-content-between ${this.state.page === 'allsystem' ? 'd-none' : ''}`}
-                            collapsible
-                            collapsed={this.state.collapsed}
-                            onCollapse={this.onCollapse}
-                            width='280px'
-                            style={{
-                                overflow: 'auto',
-                                overflowX: 'hidden',
-                                height: '100vh',
-                                position: 'fixed',
-                                left: 0,
-                                zIndex: 2,
-                            }}
+            <Layout style={{ minHeight: '100vh' }}>
+                <Sider style={{ color: "white" }} width="250" collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+                    <Menu theme="dark" defaultOpenKeys={[this.state.pageType]} defaultSelectedKeys={[this.state.page]} mode="inline">
+                        <Menu.Item
+                            onClick={() => this.props.history.push(`/`)}
+                            key="0"
+                            className="pl-4 pt-2" style={{ height: "60px" }}
+                            icon={<img className="mr-2" src="/image/pic news.png" width="35px" height="35px" />}
                         >
-                            <Menu theme="dark" mode="inline"
-                                defaultOpenKeys={[this.state.typePage]}
-                                defaultSelectedKeys={[this.state.page]}>
-                                <Menu.Item
-                                    icon={<img src='/image/pic news.png' width="40px" height="40px"
-                                        className={`${this.state.collapsed ? "d-block" : "d-none"}`} />}
-                                    style={{ height: '60px', paddingTop: '10px', paddingLeft: '20px' }}
-                                >
-                                    <LinkLogo to={`/`} >
-                                        <div style={{ width: "160px" }}>
-                                            <img src='/image/pic news.png' width="40px" height="40px"
-                                                className={`${this.state.collapsed ? "d-none" : "d-inline-block"} mr-2`} />
-                                            <span style={{ fontSize: "20px" }}>News Managemet</span>
-                                        </div>
-                                    </LinkLogo>
+                            <span className={`${this.state.collapsed ? "d-none" : ""}`}>
+                                News Management System
+                            </span>
+                        </Menu.Item>
+                        <Menu.Item onClick={() => this.props.history.push(`/${this.state.system}/${this.state.systemid}/home`)} key="home" icon={<PieChartOutlined />} >
+                            {this.state.system}
+                        </Menu.Item>
+                        <SubMenu key="news" icon={<UserOutlined />} title="News">
+                            <Menu.Item onClick={() => this.props.history.push(`/${this.state.system}/${this.state.systemid}/news/allnews`)} key="allnews">
+                                All news
+                            </Menu.Item>
+                            <Menu.Item onClick={() => this.props.history.push(`/${this.state.system}/${this.state.systemid}/news/createnews`)} key="createnews">
+                                Create news
+                                    </Menu.Item>
+                            <Menu.Item onClick={() => this.props.history.push(`/${this.state.system}/${this.state.systemid}/news/createnewstype`)} key="createnewstype">
+                                Create news type
+                                    </Menu.Item>
+                        </SubMenu>
+                        <SubMenu key="targetgroup" icon={<TeamOutlined />} title="Team">
+                            <Menu.Item onClick={() => this.props.history.push(`/${this.state.system}/${this.state.systemid}/targetgroup/alltargetgroup`)} key="alltargetgroup">
+                                All target group
+                                    </Menu.Item>
+                            <Menu.Item onClick={() => this.props.history.push(`/${this.state.system}/${this.state.systemid}/targetgroup/createtargetgroup`)} key="createtargetgroup">
+                                Create target group
+                                    </Menu.Item>
+                        </SubMenu>
+                        <Menu.Item onClick={() => this.props.history.push(`/${this.state.system}/${this.state.systemid}/dashboard`)} key="dashboard" icon={<DesktopOutlined />}>
+                            Dashboard
                                 </Menu.Item>
-                                <Menu.Item key="home" icon={<HomeOutlined className={`${this.state.collapsed ? "d-block" : "d-none"}`} />}>
-                                    <LinkMenuItem
-                                        selected={this.state.page === "home" ? true : false}
-                                        to={`/${this.state.system}/${this.state.systemid}/home`}
-                                        onClick={() => this.onChangePage('home', '')}
-                                    >
-                                        <div style={{ width: "200px" }}>
-                                            <HomeOutlined className={`${this.state.collapsed ? "d-none" : "d-inline-block"}`} />
-                                            {this.state.system}
-                                        </div>
-                                    </LinkMenuItem>
-                                </Menu.Item>
-                                <SubMenu key="news" title="News" icon={<ReadOutlined className={`${this.state.collapsed ? "d-block" : "d-none"}`} />}>
-                                    <Menu.Item key="allnews">
-                                        <LinkMenuItem
-                                            selected={this.state.page === "allnews" ? true : false}
-                                            to={`/${this.state.system}/${this.state.systemid}/news/allnews`}
-                                            onClick={() => this.onChangePage('allnews', 'news')}
-                                        >
-                                            <div style={{ width: "200px" }}>
-                                                <ReadOutlined />
-                                            All news
-                                        </div>
-                                        </LinkMenuItem>
-                                    </Menu.Item>
-                                    <Menu.Item key="createnews">
-                                        <LinkMenuItem
-                                            selected={this.state.page === "createnews" ? true : false}
-                                            to={`/${this.state.system}/${this.state.systemid}/news/createnews`}
-                                            onClick={() => this.onChangePage('createnews', 'news')}
-                                        >
-                                            <div style={{ width: "200px" }}>
-                                                <PlusOutlined />
-                                            Create news
-                                        </div>
-                                        </LinkMenuItem>
-                                    </Menu.Item>
-                                    <Menu.Item key="createnewstype">
-                                        <LinkMenuItem
-                                            selected={this.state.page === "createnewstype" ? true : false}
-                                            to={`/${this.state.system}/${this.state.systemid}/news/createnewstype`}
-                                            onClick={() => this.onChangePage('createnewstype', 'news')}
-                                        >
-                                            <div style={{ width: "200px" }}>
-                                                <NotificationOutlined />
-                                            Create news type
-                                        </div>
-                                        </LinkMenuItem>
-                                    </Menu.Item>
-                                </SubMenu>
-                                <SubMenu key="targetgroup" title="Target Group" icon={<TeamOutlined className={`${this.state.collapsed ? "d-block" : "d-none"}`} />}>
-                                    <Menu.Item key="alltargetgroup">
-                                        <LinkMenuItem
-                                            selected={this.state.page === "alltargetgroup" ? true : false}
-                                            to={`/${this.state.system}/${this.state.systemid}/targetgroup/alltargetgroup`}
-                                            onClick={() => this.onChangePage('alltargetgroup', 'targetgroup')}
-                                        >
-                                            <div style={{ width: "200px" }}>
-                                                <TeamOutlined />
-                                                All target group
-                                            </div>
-                                        </LinkMenuItem>
-                                    </Menu.Item>
-                                    <Menu.Item key="createtargetgroup">
-                                        <LinkMenuItem
-                                            selected={this.state.page === "createtargetgroup" ? true : false}
-                                            to={`/${this.state.system}/${this.state.systemid}/targetgroup/createtargetgroup`}
-                                            onClick={() => this.onChangePage('createtargetgroup', 'targetgroup')}
-                                        >
-                                            <div style={{ width: "200px" }}>
-                                                <PlusOutlined />
-                                                Create target group
-                                            </div>
-                                        </LinkMenuItem>
-                                    </Menu.Item>
-                                </SubMenu>
-                                <Menu.Item key="dashboard" icon={<AreaChartOutlined className={`${this.state.collapsed ? "d-block" : "d-none"}`} />}>
-                                    <LinkMenuItem
-                                        selected={this.state.page === "dashboard" ? true : false}
-                                        to={`/${this.state.system}/${this.state.systemid}/dashboard`}
-                                        onClick={() => this.onChangePage('dashboard', '')}
-                                    >
-                                        <div style={{ width: "200px" }}>
-                                            <AreaChartOutlined className={`${this.state.collapsed ? "d-none" : "d-inline-block"}`} />
-                                            Dashboard
-                                        </div>
-                                    </LinkMenuItem>
-                                </Menu.Item>
-                            </Menu>
-                        </Sider>
-                        <Layout className={`site-layout`} style={{backgroundColor:"white", marginLeft: this.state.collapsed ? "80px" : "280px", transition: "0.2s" }}>
-                            <div className="pt-5">
-                                {this.props.children}
-                            </div>
-                        </Layout>
-                    </Layout> : ''
-                }
-            </div>
-        )
+                    </Menu>
+                </Sider>
+                <Layout className="site-layout">
+                    <Navbar page="" />
+                    <Content style={{ margin: '0 16px' }}>
+                        {this.props.children}
+                    </Content>
+                </Layout>
+            </Layout>
+        );
     }
 }
 
-export default withAuth(LayoutPage)
+export default SiderDemo

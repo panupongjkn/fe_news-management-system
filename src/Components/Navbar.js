@@ -11,12 +11,13 @@ const Bar = styled.nav`
 
 const Navbar = (props) => {
     let user = jwtDecode(localStorage.getItem("JWT"))
+    let page = props.page
     return (
         <Bar
             className="navbar navbar-light shadow-sm justify-content-between"
             {...props}
         >
-            <Link to='/' className={`navbar-brand p-0`}>
+            <Link to='/' className={`navbar-brand p-0 ${page==""?"d-none":""}`}>
                 <img src="/image/pic news.png" width="35px" height="35px" />
                 <span className="ml-2" style={{ fontSize: "20px" }}>News Management</span>
             </Link>
