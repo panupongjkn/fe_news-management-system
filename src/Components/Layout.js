@@ -98,7 +98,7 @@ class SiderDemo extends React.Component {
                                 </Menu.Item>
                     </Menu>
                 </Sider>
-                <Layout className="site-layout">
+                <Layout style={{backgroundColor:"white"}} className="site-layout">
                     <Navbar page="" />
                     <Content style={{ margin: '0 16px' }}>
                         {this.props.children}
