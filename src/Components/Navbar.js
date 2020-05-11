@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Menu, Dropdown } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import { Link, Redirect } from 'react-router-dom'
 import jwtDecode from 'jwt-decode'
 
 const Bar = styled.nav`
@@ -9,26 +11,60 @@ const Bar = styled.nav`
     height: 50px;
 `
 
-const Navbar = (props) => {
-    let user = jwtDecode(localStorage.getItem("JWT"))
-    let page = props.page
+const menu = (Logout) => {
     return (
-        <Bar
-            className="navbar navbar-light shadow-sm justify-content-between"
-            {...props}
-        >
-            <Link to='/' className={`navbar-brand p-0 ${page==""?"d-none":""}`}>
-                <img src="/image/pic news.png" width="35px" height="35px" />
-                <span className="ml-2" style={{ fontSize: "20px" }}>News Management</span>
-            </Link>
-            <div>
-            </div>
-            <div>
-                Hi' {user.fname}
-                <img src="/image/user-profile.png" className="ml-3" width="34px" height="34px" />
-            </div>
-        </Bar>
+        <Menu className="mt-3" style={{ width: "100px" }}>
+            <Menu.Item onClick={Logout} key="0">
+                <span>Logout</span>
+            </Menu.Item>
+            {/* <Menu.Item key="1">
+                <a href="http://www.taobao.com/">2nd menu item</a>
+            </Menu.Item> */}
+        </Menu>
     )
+}
+
+class Navbar extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state= {
+            redirect : false,
+        }
+    }
+    Logout = () => {
+        localStorage.clear()
+        this.setState({
+            redirect: true,
+        })
+    }
+    render() {
+        if(this.state.redirect){
+            return <Redirect push to="/login"/>
+        }
+        let user = jwtDecode(localStorage.getItem("JWT"))
+        let page = this.props.page
+        return (
+            <Bar
+                className="navbar navbar-light shadow-sm justify-content-between"
+                {...this.props}
+            >
+                <Link to='/' className={`navbar-brand p-0 ${page == "" ? "d-none" : ""}`}>
+                    <img src="/image/pic news.png" width="35px" height="35px" />
+                    <span className="ml-2" style={{ fontSize: "20px" }}>News Management</span>
+                </Link>
+                <div>
+                </div>
+                <div>
+                    Hi' {user.fname}
+                    <Dropdown className="mt-5" overlay={menu(this.Logout)} trigger={['click']}>
+                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                            <img src="/image/user-profile.png" className="ml-3" width="34px" height="34px" />
+                        </a>
+                    </Dropdown>
+                </div>
+            </Bar>
+        )
+    }
 }
 
 export default Navbar
