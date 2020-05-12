@@ -24,8 +24,8 @@ class ReviewComponent extends React.Component {
                         <button onClick={this.props.onForm} className="btn btn-danger">Back</button>
                     </div>
                     <div className="d-inine-block">
-                        <button className="btn btn-primary ml-2">Draft</button>
-                        <button className="btn btn-primary ml-2">Announce</button>
+                        <button onClick={this.props.onDraft} className="btn btn-primary ml-2">Draft</button>
+                        <button onClick={this.props.onPublish} className="btn btn-primary ml-2">Publish</button>
                     </div>
                 </div>
             </div>

@@ -25,6 +25,7 @@ class News extends React.Component {
                 title: "",
                 body: "",
                 expiredate: "",
+                imagesUpload:[],
                 images: [],
                 newstypes: []
             }
@@ -39,6 +40,7 @@ class News extends React.Component {
                     title: this.props.news.title,
                     body: this.props.news.body,
                     expiredate: this.props.news.expiredate,
+                    imagesUpload: this.props.news.imagesUpload,
                     images: this.props.news.images,
                     newstypes: this.props.news.newstypes
                 }
@@ -59,10 +61,10 @@ class News extends React.Component {
                 <div className="pt-5">
                     <div className="col-12">
                         <div className="row">
-                            {this.state.news.images.map((image, key) => {
+                            {this.state.news.imagesUpload.map((image, key) => {
                                 return (
                                     <ImageBox className="col-12 col-sm-4 p-1 mb-3">
-                                        <Image src={URL.createObjectURL(image.originFileObj)} />
+                                        <Image src={URL.createObjectURL(image)} />
                                     </ImageBox>
                                 )
                             })}

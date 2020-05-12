@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import CreateNewsComponent from '../Components/CreateNewsPage/CreateNews'
 import CreateMessageComponent from '../Components/CreateNewsPage/CreateMessage'
 import PreviewComponent from '../Components/CreateNewsPage/Preview'
+import { Redirect } from 'react-router-dom'
 
 const Menu = styled.button`
     background-color: ${props => props.selected ? "#050042" : "white"};
@@ -34,6 +35,7 @@ class CreateNewsPage extends React.Component {
                 newstypes: [],
             },
             step: 1,
+            redirect: false,
         }
     }
     async componentWillMount() {
@@ -98,7 +100,11 @@ class CreateNewsPage extends React.Component {
             } else {
                 return (
                     <div>
-                        <PreviewComponent onForm={this.onForm} news={this.state.news} />
+                        <PreviewComponent 
+                        onDraft={this.onDraft} 
+                        onPublish={this.onPublish} 
+                        onForm={this.onForm} 
+                        news={this.state.news} />
                     </div>
                 )
             }
@@ -150,8 +156,7 @@ class CreateNewsPage extends React.Component {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Something went wrong!',
-                footer: '<a href>Why do I have this issue?</a>'
+                text: 'Please enter Title and Content',
             })
         } else {
             let newstypes = this.state.news.newstypes.filter(function (newstype) {
@@ -161,22 +166,22 @@ class CreateNewsPage extends React.Component {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Something went wrong!',
-                    footer: '<a href>Why do I have this issue?</a>'
+                    text: 'Please select news type',
                 })
             } else {
                 if (this.state.news.checkExpiredate == true && this.state.news.expiredate == "") {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'Something went wrong!',
-                        footer: '<a href>Why do I have this issue?</a>'
+                        text: 'Please select expiredate',
                     })
                 } else {
+                    let newfiles = await this.setFileImages(files)
                     await this.setState(prevState => ({
                         news: {
                             ...prevState.news,
-                            images: files
+                            images: files,
+                            imagesUpload: newfiles
                         },
                         step: 2
                     }))
@@ -184,10 +189,54 @@ class CreateNewsPage extends React.Component {
             }
         }
     }
+    setFileImages = (files) => {
+        let newsFiles = []
+        for (let index = 0; index < files.length; index++) {
+            newsFiles.push(files[index].originFileObj)
+        }
+        return newsFiles
+    }
     onForm = () => {
-        this.setState({step:1})
+        this.setState({ step: 1 })
+    }
+    onDraft = () => {
+        this.onCreateNews("draft")
+    }
+    onPublish = () => {
+        this.onCreateNews("publish")
+    }
+    onCreateNews = (status) => {
+        let news = this.state.news
+        let data = {
+            title: news.title,
+            body: news.body,
+            checkexpiredate: news.checkExpiredate,
+            expiredate: news.expiredate,
+            images: news.imagesUpload,
+            newstypes: news.newstypes,
+            system: this.state.data.system,
+            systemid: this.state.data.systemid,
+            status: status
+        }
+        axios.post("http://localhost:8080/news/create", data, {
+            headers: {
+                'Authorization': "Bearer " + localStorage.getItem("JWT")
+            }
+        }).then(res => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Create news success',
+                showConfirmButton: true,
+                timer: 3000
+            }).then((result) => {
+                this.setState({redirect:true})
+            })
+        })
     }
     render() {
+        if(this.state.redirect) {
+            return <Redirect push to={`/${this.state.data.system}/${this.state.data.systemid}/news/allnews`}/>
+        }
         return (
             <Layout {...this.props} data={this.state.data} >
                 <div className="container pt-3 pb-5">
