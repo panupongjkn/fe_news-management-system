@@ -190,7 +190,7 @@ class CreateNewsPage extends React.Component {
     render() {
         return (
             <Layout {...this.props} data={this.state.data} >
-                <div className="container">
+                <div className="container pt-3 pb-5">
                     <h3 className={`col-12 p-0 ${this.state.step == 1 ? "" : "d-none"}`}>Create news</h3>
                     <div className={`col-12 p-0 ${this.state.step == 1 ? "" : "d-none"}`}>
                         <div className="row">
