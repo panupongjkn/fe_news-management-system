@@ -47,7 +47,7 @@ class CreateNewsTypePage extends React.Component {
                 pageType: "news",
                 page: "createnewstype",
             },
-            newstype: [{}],
+            newstype: [],
             NewsType: ""
         }
     }
