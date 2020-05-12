@@ -100,13 +100,11 @@ class CreateNewsTypePage extends React.Component {
             <Layout {...this.props} data={this.state.data}>
                 <div className="container pt-4">
                     <h3>Create news type</h3>
-                    <div className="icons-list">
-                    </div>,
                     <div className="col-12">
                         <div className="row">
                             <div className="col-3 p-2">
                                 <BoxAddNewsType className="shadow-sm pt-3 px-3">
-                                    <p>Add target group</p>
+                                    <p>Add news type</p>
                                     <Input onChange={(e) => this.SetNewsType(e)} value={this.state.NewsType} placeholder="Enter type name" /><br />
                                     <ButtonAddNewsType onClick={this.AddNewsType} type="button">Add</ButtonAddNewsType>
                                 </BoxAddNewsType>
