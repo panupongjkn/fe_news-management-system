@@ -1,26 +1,17 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
-import styled from 'styled-components'
 import Navbar from './Navbar'
 
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu } from 'antd';
 import {
     DesktopOutlined,
     PieChartOutlined,
-    FileOutlined,
     TeamOutlined,
     UserOutlined,
 } from '@ant-design/icons';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
-const Test = styled.div`
-    color: red;
-    &:hover {
-        color: green;
-    }
-`
 class SiderDemo extends React.Component {
     constructor(props) {
         super(props)
@@ -65,7 +56,7 @@ class SiderDemo extends React.Component {
                             onClick={() => this.props.history.push(`/`)}
                             key="0"
                             className="pl-4 pt-2" style={{ height: "60px" }}
-                            icon={<img className="mr-2" src="/image/pic news.png" width="35px" height="35px" />}
+                            icon={<img alt="News Management System" className="mr-2" src="/image/pic news.png" width="35px" height="35px" />}
                         >
                             <span className={`${this.state.collapsed ? "d-none" : ""}`}>
                                 News Management System

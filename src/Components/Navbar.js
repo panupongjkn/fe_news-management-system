@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Menu, Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
 import { Link, Redirect } from 'react-router-dom'
 import jwtDecode from 'jwt-decode'
 
@@ -48,18 +47,18 @@ class Navbar extends React.Component {
                 className="navbar navbar-light shadow-sm justify-content-between"
                 {...this.props}
             >
-                <Link to='/' className={`navbar-brand p-0 ${page == "" ? "d-none" : ""}`}>
-                    <img src="/image/pic news.png" width="35px" height="35px" />
-                    <span className="ml-2" style={{ fontSize: "20px" }}>News Management</span>
+                <Link to='/' className={`navbar-brand p-0 ${page === "" ? "d-none" : ""}`}>
+                    <img src="/image/pic news.png" alt="News Management System" width="35px" height="35px" />
+                    <span className="ml-2" style={{ fontSize: "20px" }}>News Management System</span>
                 </Link>
                 <div>
                 </div>
                 <div>
                     Hi' {user.fname}
                     <Dropdown className="mt-5" overlay={menu(this.Logout)} trigger={['click']}>
-                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                            <img src="/image/user-profile.png" className="ml-3" width="34px" height="34px" />
-                        </a>
+                        <Link className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                            <img src="/image/user-profile.png" alt={user.fname+""+user.lname} className="ml-3" width="34px" height="34px" />
+                        </Link>
                     </Dropdown>
                 </div>
             </Bar>
