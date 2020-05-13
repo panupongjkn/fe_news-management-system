@@ -12,6 +12,7 @@ const BoxCreateTargetGroup = styled.div`
     border-radius: 10px;
     cursor: pointer;
     text-align: center;
+    padding-top: 60px;
 `
 
 
@@ -63,11 +64,11 @@ class AllTargetGroupPage extends React.Component {
                     <div className="col-12">
                         <div className="row">
                             <div className="col-3 p-2">
-                                <BoxCreateTargetGroup className="shadow-sm pt-3 px-3">
+                                <BoxCreateTargetGroup className="shadow-sm pt-5 px-3">
                                     <Link to={`/${this.state.system}/${this.state.systemid}/targetgroup/createtargetgroup`}>
                                         <PlusOutlined />
                                     </Link>
-                                    <p>Add news type</p>
+                                    <p>Add target group</p>
                                 </BoxCreateTargetGroup>
                             </div>
                             {this.state.targetgroups.map((targetgroup) => {
