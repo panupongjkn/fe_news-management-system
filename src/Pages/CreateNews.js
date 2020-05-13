@@ -12,9 +12,19 @@ import { Redirect } from 'react-router-dom'
 const Menu = styled.button`
     background-color: ${props => props.selected ? "#050042" : "white"};
     color: ${props => props.selected ? "white" : "#050042"};
-    border-radius : ${props => props.menu == "news" ? "20px 0px 0px 20px" : "0px 20px 20px 0px"};
+    border-radius : ${props => props.menu === "news" ? "20px 0px 0px 20px" : "0px 20px 20px 0px"};
     border: 1px solid ${props => props.selected ? "#050042" : "#A6A6A6"};
 `
+
+
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
 class CreateNewsPage extends React.Component {
     constructor(props) {
         super(props)
@@ -31,7 +41,9 @@ class CreateNewsPage extends React.Component {
                 body: "",
                 checkExpiredate: false,
                 expiredate: "",
+                postdate: "",
                 images: [],
+                imagesUpload: [],
                 newstypes: [],
             },
             step: 1,
@@ -85,26 +97,26 @@ class CreateNewsPage extends React.Component {
         })
     }
     ShowComponent = () => {
-        if (this.state.menu == "news") {
-            if (this.state.step == 1) {
+        if (this.state.menu === "news") {
+            if (this.state.step === 1) {
                 return (
                     <CreateNewsComponent
                         news={this.state.news}
                         onChangeNews={this.onChangeNews}
                         onChangeForm={this.onChangeForm}
                         onChageChecked={this.onChageChecked}
-                        onChangeExpiredate={this.onChangeExpiredate}
+                        // onChangeExpiredate={this.onChangeExpiredate}
                         onSelectNewsType={this.onSelectNewsType}
                         onPreview={this.onPreview} />
                 )
             } else {
                 return (
                     <div>
-                        <PreviewComponent 
-                        onDraft={this.onDraft} 
-                        onPublish={this.onPublish} 
-                        onForm={this.onForm} 
-                        news={this.state.news} />
+                        <PreviewComponent
+                            onDraft={this.onDraft}
+                            onPublish={this.onPublish}
+                            onForm={this.onForm}
+                            news={this.state.news} />
                     </div>
                 )
             }
@@ -121,11 +133,14 @@ class CreateNewsPage extends React.Component {
                 [stateName]: value
             }
         }))
-        console.log(this.state.images)
     }
-    onChangeForm = async (name, data) => {
+    onChangeForm = async (name, data) => { //files, ckeditor, expiredate
         let stateName = name
         let value = data
+        if (name === "expiredate") {
+            let date = data._d
+            value = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+        }
         await this.setState(prevState => ({
             news: {
                 ...prevState.news,
@@ -152,7 +167,7 @@ class CreateNewsPage extends React.Component {
         }))
     }
     onPreview = async (files) => {
-        if (this.state.news.title == "" || this.state.news.body == "") {
+        if (this.state.news.title === "" || this.state.news.body === "") {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -162,14 +177,14 @@ class CreateNewsPage extends React.Component {
             let newstypes = this.state.news.newstypes.filter(function (newstype) {
                 return newstype.selected
             })
-            if (newstypes.length == 0) {
+            if (newstypes.length === 0) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Please select news type',
                 })
             } else {
-                if (this.state.news.checkExpiredate == true && this.state.news.expiredate == "") {
+                if (this.state.news.checkExpiredate === true && this.state.news.expiredate === "") {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -177,11 +192,15 @@ class CreateNewsPage extends React.Component {
                     })
                 } else {
                     let newfiles = await this.setFileImages(files)
+                    let newDate = new Date()
+                    let postdate = newDate.getDate() + "/" + (newDate.getMonth() + 1) + "/" + newDate.getFullYear()
                     await this.setState(prevState => ({
                         news: {
                             ...prevState.news,
                             images: files,
-                            imagesUpload: newfiles
+                            imagesUpload: newfiles,
+                            postdate: postdate,
+
                         },
                         step: 2
                     }))
@@ -205,15 +224,26 @@ class CreateNewsPage extends React.Component {
     onPublish = () => {
         this.onCreateNews("publish")
     }
-    onCreateNews = (status) => {
+    imagesToBase64 = async () => {
+        let files = this.state.news.imagesUpload
+        let images = []
+        for (let index = 0; index < files.length; index++) {
+            images.push(await getBase64(files[index]))
+        }
+        return images
+    }
+    onCreateNews = async (status) => {
         let news = this.state.news
+        let images = await this.imagesToBase64()
         let data = {
             title: news.title,
             body: news.body,
             checkexpiredate: news.checkExpiredate,
             expiredate: news.expiredate,
-            images: news.imagesUpload,
-            newstypes: news.newstypes,
+            images: images,
+            newstypes: news.newstypes.filter(function (newstype) {
+                return newstype.selected
+            }),
             system: this.state.data.system,
             systemid: this.state.data.systemid,
             status: status
@@ -223,31 +253,35 @@ class CreateNewsPage extends React.Component {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }
         }).then(res => {
+            let title = ""
+            if(status==="draft") title = "Draft news success"
+            if(status==="Publish") title = "Create news success"
             Swal.fire({
                 icon: 'success',
-                title: 'Create news success',
+                title: title,
                 showConfirmButton: true,
                 timer: 3000
             }).then((result) => {
-                this.setState({redirect:true})
+                this.setState({ redirect: true })
             })
         })
     }
+
     render() {
-        if(this.state.redirect) {
-            return <Redirect push to={`/${this.state.data.system}/${this.state.data.systemid}/news/allnews`}/>
+        if (this.state.redirect) {
+            return <Redirect push to={`/${this.state.data.system}/${this.state.data.systemid}/news/allnews`} />
         }
         return (
             <Layout {...this.props} data={this.state.data} >
-                <div className="container pt-3 pb-5">
-                    <h3 className={`col-12 p-0 ${this.state.step == 1 ? "" : "d-none"}`}>Create news</h3>
-                    <div className={`col-12 p-0 ${this.state.step == 1 ? "" : "d-none"}`}>
+                <div className="container pt-3">
+                    <h3 className={`col-12 p-0 ${this.state.step === 1 ? "" : "d-none"}`}>Create news</h3>
+                    <div className={`col-12 p-0 ${this.state.step === 1 ? "" : "d-none"}`}>
                         <div className="row">
                             <div className="col pr-0">
                                 <Menu
                                     onClick={() => this.ChangeForm("news")}
                                     menu="news"
-                                    selected={this.state.menu == "news" ? true : false}
+                                    selected={this.state.menu === "news" ? true : false}
                                     className="col-12 py-1">
                                     Create news
                                 </Menu>
@@ -256,14 +290,14 @@ class CreateNewsPage extends React.Component {
                                 <Menu
                                     onClick={() => this.ChangeForm("message")}
                                     menu="message"
-                                    selected={this.state.menu == "message" ? true : false}
+                                    selected={this.state.menu === "message" ? true : false}
                                     className="col-12 py-1">
                                     Create meassge
                                 </Menu>
                             </div>
                         </div>
                     </div>
-                    <div className="pt-3">
+                    <div className="pt-3 pb-5">
                         {this.ShowComponent()}
                     </div>
                 </div>

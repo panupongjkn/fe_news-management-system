@@ -4,10 +4,6 @@ import styled from 'styled-components';
 import { Input } from 'antd';
 import axios from 'axios'
 
-const Background = styled.div`
- min-height: 100vh;
- Background-color: white;
-`
 const Box = styled.div`
     height: 145px;
     border: 1px solid #A6A6A6;

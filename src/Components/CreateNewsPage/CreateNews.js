@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Input, Checkbox, DatePicker, Upload, Modal } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, EyeOutlined } from '@ant-design/icons';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './CreateNews.css'
@@ -11,6 +11,14 @@ const NewsType = styled.div`
     cursor: pointer;
     background-color: ${props => props.selected ? "#050042" : "white"};
     color: ${props => props.selected ? "white" : "rgb(0,0,0,0.65)"};
+    `
+
+const Button = styled.button`
+    background-color: #050042;
+    color: white;
+    &:hover {
+        color: white;
+    }
 `
 
 function getBase64(file) {
@@ -77,7 +85,10 @@ class ComponentForm extends React.Component {
                 <div className="pt-3">
                     <CKEditor
                         editor={ClassicEditor}
-                        config={{ placeholder: "Content..." }}
+                        // config={{ placeholder: "Content..." }}
+                        config={{
+                            toolbar: ['heading', '|', 'bold', 'italic', 'blockQuote', 'link', 'numberedList', 'bulletedList', '|', 'undo', 'redo']
+                        }}
                         data={this.props.news.body}
                         onInit={editor => {
                             // You can store the "editor" and use when it is needed.
@@ -104,7 +115,7 @@ class ComponentForm extends React.Component {
                         </Checkbox>
                     <DatePicker
                         disabled={!this.props.news.checkExpiredate}
-                        onChange={(dateString) => this.props.onChangeForm("expiredate", dateString)} />
+                        onChange={(date, dateString) => this.props.onChangeForm("expiredate", date)} />
                 </div>
                 <div className="pt-3">
                     <div className="clearfix">
@@ -133,7 +144,7 @@ class ComponentForm extends React.Component {
                     <div className="pt-2">
                         {this.props.news.newstypes.map((newstype, key) => {
                             return (
-                                <NewsType onClick={() => this.props.onSelectNewsType(key)} selected={newstype.selected} className="border shadow-sm d-inline-block py-2 px-4 mr-2">
+                                <NewsType id={key} onClick={() => this.props.onSelectNewsType(key)} selected={newstype.selected} className="border shadow-sm d-inline-block py-2 px-4 mr-2">
                                     {newstype.newstype}
                                 </NewsType>
                             )
@@ -141,7 +152,10 @@ class ComponentForm extends React.Component {
                     </div>
                 </div>
                 <div className="text-right pt-3">
-                    <button onClick={() => this.props.onPreview(this.state.fileList)} className="btn btn-success">Preview</button>
+                    <Button onClick={() => this.props.onPreview(this.state.fileList)} className="btn px-4 d-flex ml-auto">
+                        <EyeOutlined className="mr-2 " style={{fontSize: "20px", paddingTop:"3px"}} />
+                        <span>Preview</span>
+                    </Button>
                 </div>
             </div>
         )
