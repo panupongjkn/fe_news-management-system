@@ -18,7 +18,6 @@ import HomeSystemPage from './Pages/HomeSystem'
 import AllNewsPage from './Pages/AllNews'
 import CreateNewsPage from './Pages/CreateNews'
 import CreateNewsTypePage from './Pages/CreateNewsType'
-import AlTargetGroupPage from './Pages/AllTargetGroup'
 import CreateTargetGroupPage from './Pages/CreateTargetGroup'
 import DashboardPage from './Pages/Dashboard'
 import AllTargetGroupPage from './Pages/AllTargetGroup';
