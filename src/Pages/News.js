@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-
+import moment from 'moment'
 const NewsType = styled.div`
     border-radius: 20px;
     cursor: pointer;
@@ -36,15 +36,18 @@ class News extends React.Component {
         try {
             const { system, systemid } = this.props.match.params
         } catch (error) {
+            let newDate = new Date()
+            let expiredate = ""
+            expiredate = moment(this.props.news.expiredate).format("DD-MM-YYYY")
             this.setState({
                 news: {
                     title: this.props.news.title,
                     body: this.props.news.body,
-                    expiredate: this.props.news.expiredate,
+                    expiredate: expiredate,
                     imagesUpload: this.props.news.imagesUpload,
                     images: this.props.news.images,
                     newstypes: this.props.news.newstypes,
-                    postdate: this.props.news.postdate
+                    postdate: moment(newDate).format("DD-MM-YYYY")
                 }
             })
         }
@@ -75,7 +78,7 @@ class News extends React.Component {
                 </div>
                 <div className="pt-3">
                     <p>Postdate : {this.state.news.postdate}</p>
-                    <p className={`${this.state.news.expiredate === "" ? "d-none" : ""}`}>Expiredate : {this.state.news.expiredate}</p>
+                    <p className={`${this.state.news.expiredate === "Invalid date" ? "d-none" : ""}`}>Expiredate : {this.state.news.expiredate}</p>
                     <p>
                         News types :
                         {this.state.news.newstypes.map((newstype, key) => {

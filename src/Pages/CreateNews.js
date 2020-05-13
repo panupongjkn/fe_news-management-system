@@ -3,6 +3,7 @@ import Layout from '../Components/Layout'
 import styled from 'styled-components'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import moment from 'moment'
 
 import CreateNewsComponent from '../Components/CreateNewsPage/CreateNews'
 import CreateMessageComponent from '../Components/CreateNewsPage/CreateMessage'
@@ -41,7 +42,6 @@ class CreateNewsPage extends React.Component {
                 body: "",
                 checkExpiredate: false,
                 expiredate: "",
-                postdate: "",
                 images: [],
                 imagesUpload: [],
                 newstypes: [],
@@ -137,10 +137,6 @@ class CreateNewsPage extends React.Component {
     onChangeForm = async (name, data) => { //files, ckeditor, expiredate
         let stateName = name
         let value = data
-        if (name === "expiredate") {
-            let date = data._d
-            value = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
-        }
         await this.setState(prevState => ({
             news: {
                 ...prevState.news,
@@ -152,7 +148,8 @@ class CreateNewsPage extends React.Component {
         await this.setState(prevState => ({
             news: {
                 ...prevState.news,
-                checkExpiredate: !this.state.news.checkExpiredate
+                checkExpiredate: !this.state.news.checkExpiredate,
+                expiredate: ""
             }
         }))
     }
@@ -192,15 +189,11 @@ class CreateNewsPage extends React.Component {
                     })
                 } else {
                     let newfiles = await this.setFileImages(files)
-                    let newDate = new Date()
-                    let postdate = newDate.getDate() + "/" + (newDate.getMonth() + 1) + "/" + newDate.getFullYear()
                     await this.setState(prevState => ({
                         news: {
                             ...prevState.news,
                             images: files,
                             imagesUpload: newfiles,
-                            postdate: postdate,
-
                         },
                         step: 2
                     }))
@@ -239,7 +232,7 @@ class CreateNewsPage extends React.Component {
             title: news.title,
             body: news.body,
             checkexpiredate: news.checkExpiredate,
-            expiredate: news.expiredate,
+            expiredate: moment(news.expiredate).format('DD-MM-YYYY'),
             images: images,
             newstypes: news.newstypes.filter(function (newstype) {
                 return newstype.selected
@@ -255,7 +248,7 @@ class CreateNewsPage extends React.Component {
         }).then(res => {
             let title = ""
             if(status==="draft") title = "Draft news success"
-            if(status==="Publish") title = "Create news success"
+            if(status==="publish") title = "Create news success"
             Swal.fire({
                 icon: 'success',
                 title: title,
