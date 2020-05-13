@@ -64,7 +64,7 @@ class AllTargetGroupPage extends React.Component {
                         <div className="row">
                             <div className="col-3 p-2">
                                 <BoxCreateTargetGroup className="shadow-sm pt-3 px-3">
-                                    <Link to={`/${this.state.system}/${this.state.systemid}/targetgroup/createtargetgroup`}>
+                                    <Link to={`/${this.state.data.system}/${this.state.data.systemid}/targetgroup/createtargetgroup`}>
                                         <PlusOutlined />
                                     </Link>
                                     <p>Add news type</p>
