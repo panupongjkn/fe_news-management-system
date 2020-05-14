@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import withAuth from "../HOC/withAuth"
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { Input } from 'antd'
 
 import CreateLineOA from '../Components/CreateSystemPage/CreateLineOA'
@@ -20,14 +20,14 @@ class CreateSystemPage extends React.Component {
                 ],
                 checkLineOA: false,
             },
-            redirect: false
+            redirect: false,
         }
     }
     onChangeName = (e) => {
         let stateName = e.target.name
         let value = e.target.value
         this.setState(prevState => ({
-            system : {
+            system: {
                 ...prevState.system,
                 [stateName]: value,
             }
@@ -51,11 +51,14 @@ class CreateSystemPage extends React.Component {
         }))
     }
     onCreateSystem = (event) => {
+        let lineoa = []
+        if(this.state.system.checkLineOA){
+            lineoa = this.state.system.lineOA
+        }
         let data = {
             systemname: this.state.system.systemname,
-            lineOA: this.state.system.lineOA
+            lineOA: lineoa
         }
-        console.log(data)
         axios.post('http://localhost:8080/system/create', data, {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
@@ -67,7 +70,7 @@ class CreateSystemPage extends React.Component {
     }
     onCheckLineOA = () => {
         this.setState(prevState => ({
-            system : {
+            system: {
                 ...prevState.system,
                 checkLineOA: !this.state.system.checkLineOA
             }
@@ -90,7 +93,7 @@ class CreateSystemPage extends React.Component {
                             onChange={this.onChangeName} type="text" />
                         <CreateLineOA system={this.state.system} onChangeLineOA={this.onChangeLineOA} onCheckLineOA={this.onCheckLineOA} className="pt-3" />
                         <div className="d-flex justify-content-between mt-5">
-                            <button className="btn btn-danger">Back</button>
+                            <Link to={`/systems`} ><button type="button " className="btn btn-danger">Back</button></Link>
                             <button className="btn btn-success" type="submit">Create</button>
                         </div>
                     </form>

@@ -30,6 +30,7 @@ class CreateLineOA extends React.Component {
                                     required
                                     placeholder="Channel Name" type="text" />
                                 <Input
+                                    minlength="10" maxlength="10"
                                     disabled={this.props.system.checkLineOA ? false : true}
                                     onChange={(e) => this.props.onChangeLineOA(e, key)}
                                     name="channelid"
@@ -39,6 +40,7 @@ class CreateLineOA extends React.Component {
                                     placeholder="Channel ID"
                                     type="text" />
                                 <Input
+                                    minlength="172" maxlength="172"
                                     disabled={this.props.system.checkLineOA ? false : true}
                                     onChange={(e) => this.props.onChangeLineOA(e, key)}
                                     name="channeltoken"
