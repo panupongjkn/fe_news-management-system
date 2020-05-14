@@ -56,7 +56,7 @@ class CreateTargetGroupPage extends React.Component {
         let data = new FormData()
         data.append("systemid", systemid)
         data.append("targetgroupname", this.state.targetgroupName)
-        axios.post("http://localhost:8080/targetgroup/create", data, {
+        axios.post(`${process.env.REACT_APP_BE_PATH}/targetgroup/create`, data, {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }

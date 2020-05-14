@@ -39,7 +39,7 @@ class RegesterPage extends React.Component {
         data.append("line", this.state.userid)
         data.append("facebook", "")
         data.append("google", "")
-        await axios.post("http://localhost:8080/register", data).then(res => {
+        await axios.post(`${process.env.REACT_APP_BE_PATH}/register`, data).then(res => {
             localStorage.setItem('JWT', res.data)
             this.setState({redirect: true})
         })

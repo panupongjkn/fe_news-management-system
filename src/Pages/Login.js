@@ -47,7 +47,7 @@ class LoginPage extends React.Component {
             if (new URLSearchParams(this.props.location.search).get("code") !== null) {
                 let data = new FormData()
                 data.append("code", new URLSearchParams(this.props.location.search).get("code"))
-                await axios.post("http://localhost:8080/linelogin", data)
+                await axios.post(`${process.env.REACT_APP_BE_PATH}/linelogin`, data)
                 .then((res) => {
                     localStorage.setItem("JWT", res.data)
                     this.setState({ 
@@ -87,7 +87,7 @@ class LoginPage extends React.Component {
                                 <h3 className="text-center"><b>SIGN IN</b></h3>
                                 <div className="col-10 p-0 mx-auto">
                                     <div className="mb-3">
-                                        <a href={'https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1654010598&redirect_uri=http://localhost:3000/login&state=12345abcde&scope=profile%20openid&nonce=09876xyz'}>
+                                        <a href={`https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${process.env.REACT_APP_CHANNEL_ID_LOGIN}&redirect_uri=${process.env.REACT_APP_FE_PATH}/login&state=12345abcde&scope=profile%20openid&nonce=09876xyz`}>
                                             <ButtonLogin>Line</ButtonLogin>
                                         </a>
                                     </div>

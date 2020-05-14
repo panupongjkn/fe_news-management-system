@@ -31,10 +31,11 @@ class SystemsPage extends React.Component {
     }
 
     componentDidMount() {
+        console.log(process.env.BE_PATH)
         let header = {
             Authorization: "Bearer " + localStorage.getItem("JWT")
         }
-        axios.get("http://localhost:8080/system/allsystem", { headers: header }).then(res => {
+        axios.get(`${process.env.REACT_APP_BE_PATH}/system/allsystem`, { headers: header }).then(res => {
             console.log(res.data)
             this.setState({
                 systems: res.data

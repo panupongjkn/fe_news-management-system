@@ -46,7 +46,7 @@ class AllTargetGroupPage extends React.Component {
     }
     GetTargetGroups = () => {
         const { system, systemid } = this.props.match.params
-        axios.get(`http://localhost:8080/targetgroup/all?systemid=${systemid}&systemname=${system}`, {
+        axios.get(`${process.env.REACT_APP_BE_PATH}/targetgroup/all?systemid=${systemid}&systemname=${system}`, {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }

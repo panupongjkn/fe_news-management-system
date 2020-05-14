@@ -59,7 +59,7 @@ class CreateSystemPage extends React.Component {
             systemname: this.state.system.systemname,
             lineOA: lineoa
         }
-        axios.post('http://localhost:8080/system/create', data, {
+        axios.post(`${process.env.REACT_APP_BE_PATH}/system/create`, data, {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }

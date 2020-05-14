@@ -63,7 +63,7 @@ class CreateNewsTypePage extends React.Component {
     }
     GetNewsTypes = () => {
         const { system, systemid } = this.props.match.params
-        axios.get(`http://localhost:8080/news/newstype/allnewstype?systemid=${systemid}&systemname=${system}`, {
+        axios.get(`${process.env.REACT_APP_BE_PATH}/news/newstype/allnewstype?systemid=${systemid}&systemname=${system}`, {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }
@@ -82,7 +82,7 @@ class CreateNewsTypePage extends React.Component {
         let data = new FormData()
         data.append("systemid", systemid)
         data.append("newstypename", this.state.NewsType)
-        axios.post("http://localhost:8080/news/newstype/create", data, {
+        axios.post(`${process.env.REACT_APP_BE_PATH}/news/newstype/create`, data, {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }

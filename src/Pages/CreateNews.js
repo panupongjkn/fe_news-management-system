@@ -61,7 +61,7 @@ class CreateNewsPage extends React.Component {
         }))
     }
     async componentDidMount() {
-        await axios.get(`http://localhost:8080/news/newstype/allnewstype?systemid=${this.state.data.systemid}&systemname=${this.state.data.system}`, {
+        await axios.get(`${process.env.REACT_APP_BE_PATH}/news/newstype/allnewstype?systemid=${this.state.data.systemid}&systemname=${this.state.data.system}`, {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }
@@ -105,7 +105,6 @@ class CreateNewsPage extends React.Component {
                         onChangeNews={this.onChangeNews}
                         onChangeForm={this.onChangeForm}
                         onChageChecked={this.onChageChecked}
-                        // onChangeExpiredate={this.onChangeExpiredate}
                         onSelectNewsType={this.onSelectNewsType}
                         onPreview={this.onPreview} />
                 )
@@ -241,7 +240,7 @@ class CreateNewsPage extends React.Component {
             systemid: this.state.data.systemid,
             status: status
         }
-        axios.post("http://localhost:8080/news/create", data, {
+        axios.post(`${process.env.REACT_APP_BE_PATH}/news/create`, data, {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }
