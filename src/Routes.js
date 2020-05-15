@@ -21,6 +21,7 @@ import CreateNewsTypePage from './Pages/CreateNewsType'
 import CreateTargetGroupPage from './Pages/CreateTargetGroup'
 import DashboardPage from './Pages/Dashboard'
 import AllTargetGroupPage from './Pages/AllTargetGroup';
+import NewsPage from './Pages/News';
 export default function Routes() {
     return (
         <Router>
@@ -30,6 +31,7 @@ export default function Routes() {
                 <Route path="/systems" render={(props) => <SystemsPage {...props}/>} />
                 <Route path="/system/create" render={(props) => <CreateSystemPage {...props}/>} />
                 <Route path="/:system/:systemid/home" render={(props) => <HomeSystemPage {...props}/>} />
+                <Route path="/:system/:systemid/news/:newsname/:newsid" render={(props) => <NewsPage {...props}/>} />
                 <Route path="/:system/:systemid/news/allnews" render={(props) => <AllNewsPage {...props}/>} />
                 <Route path="/:system/:systemid/news/createnews" render={(props) => <CreateNewsPage {...props}/>} />
                 <Route path="/:system/:systemid/news/createnewstype" render={(props) => <CreateNewsTypePage {...props}/>} />
