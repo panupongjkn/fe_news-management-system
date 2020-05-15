@@ -148,27 +148,7 @@ class AllNewsPage extends React.Component {
                             })}
                         </div>
                     </BoxAllNews>
-                    {/* <div className="col-12">
-                        <div className="row">
-                            {this.state.news.map((news) => {
-                                return (
-                                    <div className="col-3 p-2">
-                                        <BoxNews className="shadow-sm pt-3 px-3">
-                                            <h5>{news.title}</h5>
-                                            <p>{news.body}</p>
-                                            <p>{news.author}</p>
-                                            <p>{news.postdate}</p>
-                                        </BoxNews>
-                                    </div>
-                                )
-                            })}
-
-                        </div>
-
-                    </div> */}
-
                 </div>
-
             </Layout>
         )
     }
