@@ -18,14 +18,18 @@ import HomeSystemPage from './Pages/HomeSystem'
 import AllNewsPage from './Pages/AllNews'
 import CreateNewsPage from './Pages/CreateNews'
 import CreateNewsTypePage from './Pages/CreateNewsType'
+import NewsPage from './Pages/News';
 import CreateTargetGroupPage from './Pages/CreateTargetGroup'
 import DashboardPage from './Pages/Dashboard'
 import AllTargetGroupPage from './Pages/AllTargetGroup';
-import NewsPage from './Pages/News';
+import RoleUserPage from './Pages/RoleUser'
+//Line
+import RegisterLine from './Pages/Line/Register'
 export default function Routes() {
     return (
         <Router>
             <Switch>
+                <Route path="/line/register" render={(props) => <RegisterLine {...props}/>} />
                 <Route path="/login" render={(props) => <LoginPage {...props}/>} />
                 <Route path="/register" render={(props) => <RegisterPage {...props}/>} />
                 <Route path="/systems" render={(props) => <SystemsPage {...props}/>} />
@@ -38,6 +42,7 @@ export default function Routes() {
                 <Route path="/:system/:systemid/targetgroup/alltargetgroup" render={(props) => <AllTargetGroupPage {...props}/>} />
                 <Route path="/:system/:systemid/targetgroup/createtargetgroup" render={(props) => <CreateTargetGroupPage {...props}/>} />
                 <Route path="/:system/:systemid/dashboard" render={(props) => <DashboardPage {...props}/>} />
+                <Route path="/:system/:systemid/role" render={(props) => <RoleUserPage {...props}/>} />
                 <Route path="/test" render={(props) => <Layout {...props}/>} />
                 <Route render={() => <Redirect push to="/login" />} />
             </Switch>

@@ -84,9 +84,12 @@ class SiderDemo extends React.Component {
                                 Create target group
                                     </Menu.Item>
                         </SubMenu>
+                        <Menu.Item onClick={() => this.props.history.push(`/${this.state.system}/${this.state.systemid}/role`)} key="role" icon={<DesktopOutlined />}>
+                            Role user
+                        </Menu.Item>
                         <Menu.Item onClick={() => this.props.history.push(`/${this.state.system}/${this.state.systemid}/dashboard`)} key="dashboard" icon={<DesktopOutlined />}>
                             Dashboard
-                                </Menu.Item>
+                        </Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout style={{backgroundColor:"white"}} className="site-layout">
