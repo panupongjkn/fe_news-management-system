@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
+import axios from 'axios'
+
+import NewsDetail from '../Components/NewsDetail/NewsDetail'
+
 const NewsType = styled.div`
     border-radius: 20px;
     cursor: pointer;
@@ -29,69 +33,38 @@ class News extends React.Component {
                 images: [],
                 newstypes: [],
                 postdate: "",
+                status: "newsdetail",
             }
         }
     }
     componentDidMount() {
-        try {
-            const { system, systemid } = this.props.match.params
-        } catch (error) {
-            let newDate = new Date()
-            let expiredate = ""
-            expiredate = moment(this.props.news.expiredate).format("DD-MM-YYYY")
-            this.setState({
-                news: {
-                    title: this.props.news.title,
-                    body: this.props.news.body,
-                    expiredate: expiredate,
-                    imagesUpload: this.props.news.imagesUpload,
-                    images: this.props.news.images,
-                    newstypes: this.props.news.newstypes,
-                    postdate: moment(newDate).format("DD-MM-YYYY")
+            const { system, systemid, newsid } = this.props.match.params
+            axios.get(`${process.env.REACT_APP_BE_PATH}/news/${newsid}`).then(res => {
+                console.log(res.data)
+                let news = res.data
+                let postdate = new Date()
+                if (news.status == "publish") {
+                    postdate = news.CreatedAt
                 }
+                this.setState({
+                    news: {
+                        title: news.Title,
+                        body: news.Body,
+                        expiredate: news.ExpireDate,
+                        images: news.Image,
+                        newstypes: news.TypeOfNews,
+                        postdate: postdate
+                    }
+                })
             })
-        }
     }
     createMarkup = () => {
         return { __html: this.state.news.body };
     }
     render() {
-        console.log("Show", this.state)
         return (
-            <div>
-                <div className="text-center mb-4">
-                    <h5>{this.state.news.title}</h5>
-                </div>
-                <div dangerouslySetInnerHTML={this.createMarkup()} className='editor'></div>
-                <div className={`pt-5 ${this.state.news.imagesUpload.length === 0 ? "d-none" : ""}`}>
-                    <div className="col-12">
-                        <div className="row">
-                            {this.state.news.imagesUpload.map((image, key) => {
-                                return (
-                                    <ImageBox className="col-12 col-sm-4 p-1 mb-3">
-                                        <Image src={URL.createObjectURL(image)} />
-                                    </ImageBox>
-                                )
-                            })}
-                        </div>
-                    </div>
-                </div>
-                <div className="pt-3">
-                    <p>Postdate : {this.state.news.postdate}</p>
-                    <p className={`${this.state.news.expiredate === "Invalid date" ? "d-none" : ""}`}>Expiredate : {this.state.news.expiredate}</p>
-                    <p>
-                        News types :
-                        {this.state.news.newstypes.map((newstype, key) => {
-                        if (newstype.selected) {
-                            return (
-                                <NewsType className="border shadow-sm d-inline-block py-2 px-4 ml-2">
-                                    {newstype.newstype}
-                                </NewsType>
-                            )
-                        }
-                    })}
-                    </p>
-                </div>
+            <div className="container">
+                <NewsDetail news={this.state.news}/>
             </div>
         )
     }

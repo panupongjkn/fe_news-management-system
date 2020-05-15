@@ -45,6 +45,8 @@ class CreateNewsPage extends React.Component {
                 images: [],
                 imagesUpload: [],
                 newstypes: [],
+                status: "preview",
+                postdate: new Date()
             },
             step: 1,
             redirect: false,
@@ -191,8 +193,8 @@ class CreateNewsPage extends React.Component {
                     await this.setState(prevState => ({
                         news: {
                             ...prevState.news,
-                            images: files,
-                            imagesUpload: newfiles,
+                            images: newfiles,
+                            imagesUpload: files,
                         },
                         step: 2
                     }))
@@ -217,7 +219,7 @@ class CreateNewsPage extends React.Component {
         this.onCreateNews("publish")
     }
     imagesToBase64 = async () => {
-        let files = this.state.news.imagesUpload
+        let files = this.state.news.images
         let images = []
         for (let index = 0; index < files.length; index++) {
             images.push(await getBase64(files[index]))

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { NotificationFilled, FileAddFilled } from '@ant-design/icons';
-import PreviewComponent from '../../Pages/News'
+import NewsDetail from '../NewsDetail/NewsDetail'
 
 const Button = styled.button`
     background-color: #050042;
@@ -23,13 +23,14 @@ class ReviewComponent extends React.Component {
             behavior: "smooth"
         });
     }
-    render(props) {
+    render() {
         this.scrollToTop()
+        console.log("news1", this.props)
         return (
             <div>
                 <h3>Preview</h3>
                 <div className="mx-3 px-5 pt-5 border rounded">
-                    <PreviewComponent {...this.props} />
+                <NewsDetail {...this.props}/>
                 </div>
                 <div className="d-flex justify-content-between pt-5 mx-3">
                     <div className="d-inine-block">

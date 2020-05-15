@@ -43,7 +43,7 @@ class ComponentForm extends React.Component {
 
     componentDidMount() {
         this.setState({
-            fileList: this.props.news.images
+            fileList: this.props.news.imagesUpload
         })
     }
 
