@@ -84,6 +84,9 @@ class AllNewsPage extends React.Component {
             })
         })
     }
+    createMarkup = (body) => {
+        return { __html: body };
+    }
     render() {
         return (
             <Layout {...this.props} data={this.state.data}>
@@ -100,7 +103,7 @@ class AllNewsPage extends React.Component {
                                                 <b>{news.Title}</b>
                                             </BoxTitle>
                                             <BoxBody className="mb-2">
-                                                {news.body}
+                                                <div dangerouslySetInnerHTML={this.createMarkup(news.Body)} className='editor'></div>
                                             </BoxBody>
                                             {news.author}
                                             <p>{news.postdate}</p>
@@ -129,14 +132,16 @@ class AllNewsPage extends React.Component {
                                                 <b>{news.Title}</b>
                                             </BoxTitle>
                                             <BoxBody className="mb-2">
-                                                {news.body}
+                                                <div dangerouslySetInnerHTML={this.createMarkup(news.Body)} className='editor'></div>
                                             </BoxBody>
                                             {news.author}
                                             <p>{news.postdate}</p>
-                                            <Button onClick={() => this.props.onPreview(this.state.fileList)} className="btn px-3 d-flex ml-auto">
-                                                <EyeOutlined className="mr-2 " style={{ fontSize: "16px", paddingTop: "3px" }} />
-                                                <span style={{ fontSize: "14px" }}>Preview</span>
-                                            </Button>
+                                            <Link to={`/${this.state.data.system}/${this.state.data.systemid}/news/${news.Title}/${news.ID}`}>
+                                                <Button className="btn px-3 d-flex ml-auto">
+                                                    <EyeOutlined className="mr-2 " style={{ fontSize: "16px", paddingTop: "3px" }} />
+                                                    <span style={{ fontSize: "14px" }}>Preview</span>
+                                                </Button>
+                                            </Link>
                                         </BoxNews>
                                     </div>
                                 )
