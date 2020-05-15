@@ -32,6 +32,7 @@ class RegesterPage extends React.Component {
         })
     }
     onRegister = async (event) => {
+        event.preventDefault();
         let data = new FormData()
         data.append("email", this.state.email)
         data.append("fname", this.state.fname)
@@ -40,14 +41,13 @@ class RegesterPage extends React.Component {
         data.append("facebook", "")
         data.append("google", "")
         await axios.post(`${process.env.REACT_APP_BE_PATH}/register`, data).then(res => {
+            console.log(res.data)
             localStorage.setItem('JWT', res.data)
             this.setState({redirect: true})
         })
-        event.preventDefault();
     }
     render() {
         if (this.state.redirect) {
-            console.log("redirect")
             return <Redirect push to="/login" />
         }
         return (

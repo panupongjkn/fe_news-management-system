@@ -26,7 +26,7 @@ class SystemsPage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            systems: [{}]
+            systems: []
         }
     }
 
@@ -36,7 +36,6 @@ class SystemsPage extends React.Component {
             Authorization: "Bearer " + localStorage.getItem("JWT")
         }
         axios.get(`${process.env.REACT_APP_BE_PATH}/system/allsystem`, { headers: header }).then(res => {
-            console.log(res.data)
             this.setState({
                 systems: res.data
             })
