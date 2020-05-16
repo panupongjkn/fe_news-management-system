@@ -3,6 +3,23 @@ import { Input } from 'antd'
 import axios from 'axios'
 import styled from 'styled-components'
 
+// const liff = window.liff
+
+function initializeLiff(myLiffId) {
+    liff
+        .init({
+            liffId: myLiffId
+        })
+        .then(() => {
+            // start to use LIFF's api
+            initializeApp();
+        })
+        .catch((err) => {
+            document.getElementById("liffAppContent").classList.add('hidden');
+            document.getElementById("liffInitErrorMessage").classList.remove('hidden');
+        });
+}
+
 const RoleBox = styled.div`
     background-color : ${props => props.selected ? "#050042" : "white"};
     color: ${props => props.selected ? "white" : "#050042"};
@@ -100,6 +117,7 @@ class Register extends React.Component {
             })
         })
         console.log(this.state.newstype)
+        initializeLiff("1654010598-xR8ZnwJ2")
     }
     showComponent = () => {
         if (this.state.component === 1) {
