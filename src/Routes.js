@@ -29,7 +29,7 @@ export default function Routes() {
     return (
         <Router>
             <Switch>
-                <Route path="/line/register" render={(props) => <RegisterLine {...props}/>} />
+                <Route path="/line/register/:system/:systemid" render={(props) => <RegisterLine {...props}/>} />
                 <Route path="/login" render={(props) => <LoginPage {...props}/>} />
                 <Route path="/register" render={(props) => <RegisterPage {...props}/>} />
                 <Route path="/systems" render={(props) => <SystemsPage {...props}/>} />

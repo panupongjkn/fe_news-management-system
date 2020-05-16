@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
-import axios from 'axios'
+
 const NewsType = styled.div`
     border-radius: 20px;
     cursor: pointer;
@@ -36,7 +36,7 @@ const NewsDetail = (props) => {
                     <div className="col-12">
                         <div className="row">
                             {props.news.images.map((image, key) => {
-                                if (props.news.status == "preview") {
+                                if (props.news.status === "preview") {
                                     return (
                                         <ImageBox className="col-12 col-sm-4 p-1 mb-3">
                                             <Image src={URL.createObjectURL(image)} />
@@ -59,22 +59,22 @@ const NewsDetail = (props) => {
                     <p>
                         News types :
                         {props.news.newstypes.map((newstype, key) => {
-                        if (props.news.status == "preview") {
+                        if (props.news.status === "preview") {
                             if (newstype.selected) {
                                 return (
-                                    <NewsType className="border shadow-sm d-inline-block py-2 px-4 ml-2">
+                                    <NewsType key={key} className="border shadow-sm d-inline-block py-2 px-4 ml-2">
                                         {newstype.newstype}
                                     </NewsType>
                                 )
                             }
                         } else {
                             return (
-                                <NewsType className="border shadow-sm d-inline-block py-2 px-4 ml-2">
+                                <NewsType key={key} className="border shadow-sm d-inline-block py-2 px-4 ml-2">
                                     {newstype.NewsTypeName}
                                 </NewsType>
                             )
                         }
-                    })}
+                        })}
                     </p>
                 </div>
             </div>

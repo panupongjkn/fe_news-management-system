@@ -51,6 +51,7 @@ class CreateSystemPage extends React.Component {
         }))
     }
     onCreateSystem = (event) => {
+        event.preventDefault();
         let lineoa = []
         if(this.state.system.checkLineOA){
             lineoa = this.state.system.lineOA
@@ -66,7 +67,6 @@ class CreateSystemPage extends React.Component {
         }).then(res => {
             this.setState({ redirect: true })
         })
-        event.preventDefault();
     }
     onCheckLineOA = () => {
         this.setState(prevState => ({

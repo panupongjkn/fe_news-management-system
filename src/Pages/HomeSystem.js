@@ -2,8 +2,6 @@ import React from 'react'
 import Layout from '../Components/Layout'
 import styled from 'styled-components'
 import axios from 'axios'
-import { PlusOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom'
 
 const BoxNews = styled.div`
     border: 1px solid #A6A6A6;

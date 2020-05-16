@@ -31,7 +31,6 @@ class SystemsPage extends React.Component {
     }
 
     componentDidMount() {
-        console.log(process.env.BE_PATH)
         let header = {
             Authorization: "Bearer " + localStorage.getItem("JWT")
         }
