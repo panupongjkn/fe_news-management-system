@@ -123,7 +123,7 @@ class Register extends React.Component {
         // })
         // this.connectLiff()
     }
-    getProfile() {
+    getProfile = () => {
         liff.getProfile().then(dataInfo => {
             this.setState({
                 name: dataInfo.displayName,
