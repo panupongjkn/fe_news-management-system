@@ -79,11 +79,15 @@ class Register extends React.Component {
                 newsInterested: [],
             },
             // line: {
-            profile: "",
-            display: "",
-            status: "",
-            pictureUrl: "",
-            email: "",
+            name: '',
+            userLineID: '',
+            pictureUrl: '',
+            statusMessage: '',
+            languageDevice: '',
+            versionSDK: '',
+            client: '',
+            isLogin: '',
+            os: '',
             // },
             component: 1,
             role: [],
@@ -92,23 +96,56 @@ class Register extends React.Component {
         }
     }
     async componentDidMount() {
-        let { system, systemid } = this.props.match.params
-        await axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemname=${system}&systemid=${systemid}`).then(async res => {
-            this.setState({ role: res.data })
-            console.log(res.data)
-            await axios.get(`${process.env.REACT_APP_BE_PATH}/news/newstype/allnewstype?systemname=${system}&systemid=${systemid}`).then(async res => {
-                let newstypearr = []
-                await res.data.forEach(newstype => {
-                    let newstypedata = {
-                        ...newstype,
-                        selected: false
-                    }
-                    newstypearr.push(newstypedata)
-                });
-                this.setState({ newstype: newstypearr })
+        liff.init({ liffId: '1654010598-xR8ZnwJ2' })
+            .then(async () => {
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                }
             })
-        })
-        this.connectLiff()
+            .catch((err) => {
+                console.log(err)
+            });
+        // let { system, systemid } = this.props.match.params
+        // await axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemname=${system}&systemid=${systemid}`).then(async res => {
+        //     this.setState({ role: res.data })
+        //     console.log(res.data)
+        //     await axios.get(`${process.env.REACT_APP_BE_PATH}/news/newstype/allnewstype?systemname=${system}&systemid=${systemid}`).then(async res => {
+        //         let newstypearr = []
+        //         await res.data.forEach(newstype => {
+        //             let newstypedata = {
+        //                 ...newstype,
+        //                 selected: false
+        //             }
+        //             newstypearr.push(newstypedata)
+        //         });
+        //         this.setState({ newstype: newstypearr })
+        //     })
+        // })
+        // this.connectLiff()
+    }
+    getProfile() {
+        liff.getProfile().then(dataInfo => {
+            this.setState({
+                name: dataInfo.displayName,
+                userLineID: dataInfo.userId,
+                pictureUrl: dataInfo.pictureUrl,
+                statusMessage: dataInfo.statusMessage
+            });
+        });
+
+        const languageDevice = liff.getLanguage();
+        const versionSDK = liff.getVersion();
+        const client = liff.isInClient();
+        const isLogin = liff.isLoggedIn();
+        const os = liff.getOS();
+
+        this.setState({
+            languageDevice: languageDevice,
+            versionSDK: versionSDK,
+            client: (client === true) ? 'YES' : 'NO',
+            isLogin: (isLogin === true) ? 'Login' : 'Not Login',
+            os: os
+        });
     }
     connectLiff = () => {
         const liffId = '1654010598-xR8ZnwJ2'
@@ -239,12 +276,83 @@ class Register extends React.Component {
     render() {
         return (
             <div className="container pt-5">
-                status: {this.state.status}
-                profile: {this.state.profile}
-                email: {this.state.email}
-                picture: {this.state.pictureUrl}
-                display: {this.state.display}
-                {this.showComponent()}
+                <div className="support">
+                    {
+                        (this.state.pictureUrl && this.state.pictureUrl != '')
+                            ?
+                            <img width="25%" src={this.state.pictureUrl} />
+                            :
+                            null
+                    }
+                </div>
+                {
+                    (this.state.name && this.state.name != '')
+                        ?
+                        <p>Name: {this.state.name}</p>
+                        :
+                        null
+                }
+                {
+                    (this.state.userLineID && this.state.userLineID != '')
+                        ?
+                        <p>LineID: {this.state.userLineID}</p>
+                        :
+                        null
+                }
+                {
+                    (this.state.statusMessage && this.state.statusMessage != '')
+                        ?
+                        <p>statusMessage: {this.state.statusMessage}</p>
+                        :
+                        null
+                }
+                {
+                    (this.state.languageDevice && this.state.languageDevice != '')
+                        ?
+                        <p>languageDevice: {this.state.languageDevice}</p>
+                        :
+                        null
+                }
+                {
+                    (this.state.versionSDK && this.state.versionSDK != '')
+                        ?
+                        <p>versionSDK: {this.state.versionSDK}</p>
+                        :
+                        null
+                }
+                {
+                    (this.state.client && this.state.client != '')
+                        ?
+                        <p>client: {this.state.client}</p>
+                        :
+                        null
+                }
+                {
+                    (this.state.isLogin && this.state.isLogin != '')
+                        ?
+                        <p>isLogin: {this.state.isLogin}</p>
+                        :
+                        null
+                }
+                {
+                    (this.state.os && this.state.os != '')
+                        ?
+                        <p>os: {this.state.os}</p>
+                        :
+                        null
+                }
+                <div className="support">
+                    <button variant="contained" onClick={this.getProfile.bind(this)} style={{ marginRight: '20px' }} color="primary">
+                        Getdata INFO
+                    </button>
+                    {/* <Button variant="contained" onClick={this.sendMessage.bind(this)} style={{ marginRight: '20px' }}>
+                        Send Message
+            </Button>
+                    <Button variant="contained" onClick={this.closeLIFF.bind(this)} color="secondary">
+                        Close LIFF
+            </Button> */}
+                </div>
+                {/* {this.showComponent()} */}
             </div>
         )
     }
