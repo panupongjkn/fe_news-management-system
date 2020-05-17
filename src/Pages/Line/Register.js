@@ -4,6 +4,7 @@ import axios from 'axios'
 import styled from 'styled-components'
 
 const liff = window.liff
+
 const RoleBox = styled.div`
     background-color : ${props => props.selected ? "#050042" : "white"};
     color: ${props => props.selected ? "white" : "#050042"};
@@ -110,25 +111,34 @@ class Register extends React.Component {
         this.connectLiff()
     }
     connectLiff = () => {
-        liff.init({ liffId: "1654010598-xR8ZnwJ2" }, () => {
-            if (liff.isLoggedIn()) {
-                liff.getProfile().then(async profile => {
-                    await this.setState({
-                        line: {
-                            profile: profile.userId,
-                            display: profile.displayName,
-                            status: profile.statusMessage,
-                            pictureUrl: profile.pictureUrl,
-                            email: liff.getDecodedIDToken().email,
-                        }
-                    })
-                }).catch(
-                    err => console.error(err)
-                );
-            } else {
-                liff.login();
-            }
-        }, err => console.error(err.code, err.message));
+        const liffId = '1654010598-xR8ZnwJ2'
+        liff.init({ liffId }).then(() => {
+            const idToken = liff.getDecodedIDToken();
+            this.setState({
+                profile: idToken.sub,
+                pictureUrl: idToken.picture,
+            })
+        }).catch((err) => {
+            // Error happens during initialization
+            console.log(err.code, err.message);
+        });
+        // if (liff.isLoggedIn()) {
+        //     liff.getProfile().then(async profile => {
+        //         await this.setState({
+        //             line: {
+        //                 profile: profile.userId,
+        //                 display: profile.displayName,
+        //                 status: profile.statusMessage,
+        //                 pictureUrl: profile.pictureUrl,
+        //                 email: liff.getDecodedIDToken().email,
+        //             }
+        //         })
+        //     }).catch(
+        //         err => console.error(err)
+        //     );
+        // } else {
+        //     liff.login();
+        // }
     }
     showComponent = () => {
         if (this.state.component === 1) {
