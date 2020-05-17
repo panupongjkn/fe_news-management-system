@@ -25,6 +25,7 @@ class Routes extends React.Component {
         const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
         let query = new URLSearchParams(queryString)
         let path = "/line/" + query.get("system") + "/" + query.get("systemid") + "/register"
+        await liff.init({ liffId: "1654010598-xR8ZnwJ2"})
         await this.setState({
             path: path,
             // redirect: true
