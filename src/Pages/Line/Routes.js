@@ -17,8 +17,9 @@ class Routes extends React.Component {
         }
     }
     async componentDidMount() {
-        const queryString = await decodeURIComponent(window.location.search).replace("?liff.state=", "");
-        let query = await new URLSearchParams(queryString)
+        // const queryString = await decodeURIComponent(window.location.search).replace("?liff.state=", "");
+        let queryString = window.location.search
+        let query = await new URLSearchParams(queryString.substring(12))
         let path = await "/line/" + query.get("system") + "/" + query.get("systemid") + "/register"
         await this.setState({
             path: path,
