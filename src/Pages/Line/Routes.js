@@ -17,12 +17,6 @@ class Routes extends React.Component {
             path: path,
             redirect: true
         })
-        console.log(this.state)
-        // console.log("query", window.location.search)
-        // console.log("query2", queryString)
-        // console.log("query3", query)
-        // console.log("system", query.get("system"))
-        // console.log("systemid", query.get("systemid"))
     }
     render() {
         if(this.state.redirect){

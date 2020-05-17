@@ -86,7 +86,7 @@ class RoleUserPage extends React.Component {
             }
         }).then(res => {
             this.GetRoleUser()
-            this.setState({ NewsType: "" })
+            this.setState({ RoleUser: "" })
         })
     }
     render() {
