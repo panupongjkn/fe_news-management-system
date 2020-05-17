@@ -77,13 +77,13 @@ class Register extends React.Component {
                 roleid: 0,
                 newsInterested: [],
             },
-            line: {
-                profile: "",
-                display: "",
-                status: "",
-                pictureUrl: "",
-                email: "",
-            },
+            // line: {
+            profile: "",
+            display: "",
+            status: "",
+            pictureUrl: "",
+            email: "",
+            // },
             component: 1,
             role: [],
             newstype: [],
@@ -91,7 +91,6 @@ class Register extends React.Component {
         }
     }
     async componentDidMount() {
-        this.connectLiff()
         let { system, systemid } = this.props.match.params
         await axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemname=${system}&systemid=${systemid}`).then(async res => {
             this.setState({ role: res.data })
@@ -108,24 +107,19 @@ class Register extends React.Component {
                 this.setState({ newstype: newstypearr })
             })
         })
+        this.connectLiff()
     }
     connectLiff = () => {
         liff.init({ liffId: "1654010598-xR8ZnwJ2" }, () => {
             if (liff.isLoggedIn()) {
-                liff.getProfile().then(profile => {
-                    const userProfile = profile.userId;
-                    const displayName = profile.displayName;
-                    const statusMessage = profile.statusMessage;
-                    const pictureUrl = profile.pictureUrl;
-                    const email = liff.getDecodedIDToken().email;
-                    console.log(userProfile, displayName, statusMessage, pictureUrl, email)
-                    this.setState({
+                liff.getProfile().then(async profile => {
+                    await this.setState({
                         line: {
-                            profile: userProfile,
-                            display: displayName,
-                            status: statusMessage,
-                            pictureUrl: pictureUrl,
-                            email: email,
+                            profile: profile.userId,
+                            display: profile.displayName,
+                            status: profile.statusMessage,
+                            pictureUrl: profile.pictureUrl,
+                            email: liff.getDecodedIDToken().email,
                         }
                     })
                 }).catch(
@@ -235,7 +229,11 @@ class Register extends React.Component {
     render() {
         return (
             <div className="container pt-5">
-                status: {this.state.line.status}
+                status: {this.state.status}
+                profile: {this.state.profile}
+                email: {this.state.email}
+                picture: {this.state.pictureUrl}
+                display: {this.state.display}
                 {this.showComponent()}
             </div>
         )
