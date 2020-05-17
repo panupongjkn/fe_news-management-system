@@ -19,6 +19,7 @@ class Routes extends React.Component {
             isLogin: '',
             os: '',
             accessToken: '',
+            email: ''
         }
     }
     async componentDidMount() {
@@ -40,7 +41,7 @@ class Routes extends React.Component {
             pictureUrl: profile.pictureUrl,
             userLineID: profile.userId,
             statusMessage: profile.statusMessage,
-
+            email: liff.getDecodedIDToken().email()
         })
         
     }
@@ -86,6 +87,7 @@ class Routes extends React.Component {
                 <p>pictureUrl: <img src={this.state.pictureUrl}/></p>
                 <p>userId: {this.state.userLineID}</p>
                 <p>status: {this.state.statusMessage}</p>
+                <p>email: {this.state.email}</p>
             </div>
         )
     }
