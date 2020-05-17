@@ -40,7 +40,7 @@ class RoleUserPage extends React.Component {
             data: {
                 system: "",
                 systemid:"",
-                page: "role"
+                page: "role",
             },
             RoleUser: "",
             role: []
