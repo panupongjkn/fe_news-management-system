@@ -95,7 +95,7 @@ class Register extends React.Component {
             error: false,
         }
     }
-    async componentDidMount() {
+    componentDidMount() {
         liff.init({ liffId: '1654010598-xR8ZnwJ2' })
             .then(async () => {
                 if (!liff.isLoggedIn()) {
@@ -342,7 +342,7 @@ class Register extends React.Component {
                         null
                 }
                 <div className="support">
-                    <button variant="contained" onClick={this.getProfile.bind(this)} style={{ marginRight: '20px' }} color="primary">
+                    <button variant="contained" onClick={this.getProfile()} style={{ marginRight: '20px' }} color="primary">
                         Getdata INFO
                     </button>
                     {/* <Button variant="contained" onClick={this.sendMessage.bind(this)} style={{ marginRight: '20px' }}>
