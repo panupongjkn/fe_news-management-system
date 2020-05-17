@@ -91,6 +91,16 @@ class Register extends React.Component {
         }
     }
     async componentDidMount() {
+        await liff.init({ liffId: "1654010598-xR8ZnwJ2" })
+        const profile = await liff.getProfile()
+        await this.setState({
+            line : {
+                displayName: profile.displayName,
+                userId: profile.userId,
+                pictureUrl: profile.pictureUrl,
+                email: liff.getDecodedIDToken().email
+            }
+        })
         let { system, systemid } = this.props.match.params
         await axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemname=${system}&systemid=${systemid}`).then(async res => {
             this.setState({ role: res.data })
@@ -201,8 +211,22 @@ class Register extends React.Component {
                 },
                 error: false,
             }))
-            console.log(this.state.user)
         }
+        let { systemid } = this.props.match.params
+        let data = {
+            fname: this.state.user.fname,
+            lname: this.state.user.lname,
+            roleid: this.state.user.roleid,
+            newsinterested: this.state.user.newsInterested,
+            email: this.state.line.email,
+            line: this.state.line.userId,
+            systemid: systemid
+        }
+        axios.post(`${process.env.REACT_APP_BE_PATH}/line/register`, data).then((res) => {
+            liff.closeWindow()
+        }).catch(err => {
+            liff.closeWindow()
+        })
     }
     render() {
         return (
