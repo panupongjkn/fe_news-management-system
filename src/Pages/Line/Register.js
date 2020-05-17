@@ -96,10 +96,11 @@ class Register extends React.Component {
         }
     }
     componentDidMount() {
+        console.log(window.location.href)
         liff.init({ liffId: '1654010598-xR8ZnwJ2' })
             .then(async () => {
                 if (!liff.isLoggedIn()) {
-                    liff.login({ redirectUri: window.location.href }    );
+                    liff.login({ redirectUri: window.location.href });
                 }
             })
             .catch((err) => {
@@ -123,9 +124,9 @@ class Register extends React.Component {
         // })
         // this.connectLiff()
     }
-    getProfile = () => {
-        liff.getProfile().then(dataInfo => {
-            this.setState({
+    getProfile = async () => {
+        liff.getProfile().then(async dataInfo => {
+            await this.setState({
                 name: dataInfo.displayName,
                 userLineID: dataInfo.userId,
                 pictureUrl: dataInfo.pictureUrl,
@@ -139,7 +140,7 @@ class Register extends React.Component {
         const isLogin = liff.isLoggedIn();
         const os = liff.getOS();
 
-        this.setState({
+        await this.setState({
             languageDevice: languageDevice,
             versionSDK: versionSDK,
             client: (client === true) ? 'YES' : 'NO',
@@ -147,18 +148,18 @@ class Register extends React.Component {
             os: os
         });
     }
-    connectLiff = () => {
-        const liffId = '1654010598-xR8ZnwJ2'
-        liff.init({ liffId }).then(() => {
-            const idToken = liff.getDecodedIDToken();
-            this.setState({
-                profile: idToken.sub,
-                pictureUrl: idToken.picture,
-            })
-        }).catch((err) => {
+    // connectLiff = () => {
+    //     const liffId = '1654010598-xR8ZnwJ2'
+    //     liff.init({ liffId }).then(() => {
+    //         const idToken = liff.getDecodedIDToken();
+    //         this.setState({
+    //             profile: idToken.sub,
+    //             pictureUrl: idToken.picture,
+    //         })
+    //     }).catch((err) => {
             // Error happens during initialization
-            console.log(err.code, err.message);
-        });
+            // console.log(err.code, err.message);
+        // });
         // if (liff.isLoggedIn()) {
         //     liff.getProfile().then(async profile => {
         //         await this.setState({
@@ -176,7 +177,7 @@ class Register extends React.Component {
         // } else {
         //     liff.login();
         // }
-    }
+    // }
     showComponent = () => {
         if (this.state.component === 1) {
             return <NameForm user={this.state.user} onChangeName={this.onChangeName} onNextToRole={this.onNextToRole} />
@@ -276,7 +277,7 @@ class Register extends React.Component {
     render() {
         return (
             <div className="container pt-5">
-                <div className="support">
+                {/* <div className="support">
                     {
                         (this.state.pictureUrl && this.state.pictureUrl != '')
                             ?
@@ -341,17 +342,17 @@ class Register extends React.Component {
                         :
                         null
                 }
-                <div className="support">
-                    <button variant="contained" onClick={this.getProfile()} style={{ marginRight: '20px' }} color="primary">
+                <div className="support">*/}
+                    <button onClick={this.getProfile()} style={{ marginRight: '20px' }}>
                         Getdata INFO
-                    </button>
+                    </button> 
                     {/* <Button variant="contained" onClick={this.sendMessage.bind(this)} style={{ marginRight: '20px' }}>
                         Send Message
             </Button>
                     <Button variant="contained" onClick={this.closeLIFF.bind(this)} color="secondary">
                         Close LIFF
             </Button> */}
-                </div>
+                {/* </div> */}
                 {/* {this.showComponent()} */}
             </div>
         )
