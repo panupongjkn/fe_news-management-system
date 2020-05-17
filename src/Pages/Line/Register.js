@@ -90,7 +90,7 @@ class Register extends React.Component {
             error: false,
         }
     }
-    componentDidMount() {
+    async componentDidMount() {
         let { system, systemid } = this.props.match.params
         await axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemname=${system}&systemid=${systemid}`).then(async res => {
             this.setState({ role: res.data })
