@@ -18,6 +18,7 @@ class Routes extends React.Component {
             client: '',
             isLogin: '',
             os: '',
+            accessToken: '',
         }
     }
     async componentDidMount() {
@@ -27,19 +28,13 @@ class Routes extends React.Component {
         await this.setState({
             path: path,
             // redirect: true
+            os: liff.getOS(),
+            languageDevice: liff.getLanguage(),
+            versionSDK: liff.getVersion(),
+            accessToken: liff.getAccessToken(),
+            client: liff.isInClient()
         })
-        liff.init({ liffId: '1654010598-xR8ZnwJ2' })
-            .then(async () => {
-                this.getProfile()
-                if (!liff.isLoggedIn()) {
-                    liff.login(window.location.search);
-                } else {
-                    this.getProfile()
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-            });
+        
     }
     // getProfile = async () => {
     //     liff.getProfile().then(async dataInfo => {
@@ -75,6 +70,11 @@ class Routes extends React.Component {
         return (
             <div>
                 Redirect to {this.state.path}
+                <p>os: {this.state.os}</p>
+                <p>lang: {this.state.languageDevice}</p>
+                <p>version: {this.state.versionSDK}</p>
+                <p>token: {this.state.accessToken}</p>
+                <p>client: {this.state.client}</p>
             </div>
         )
     }
