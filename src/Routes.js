@@ -46,7 +46,7 @@ export default function Routes() {
                 <Route path="/:system/:systemid/dashboard" render={(props) => <DashboardPage {...props}/>} />
                 <Route path="/:system/:systemid/role" render={(props) => <RoleUserPage {...props}/>} />
                 <Route path="/test" render={(props) => <Layout {...props}/>} />
-                <Route render={() => <Redirect push to="/login" />} />
+                {/* <Route render={() => <Redirect push to="/login" />} /> */}
             </Switch>
         </Router>
     )
