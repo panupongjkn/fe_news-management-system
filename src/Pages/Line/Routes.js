@@ -32,7 +32,7 @@ class Routes extends React.Component {
             .then(async () => {
                 this.getProfile()
                 if (!liff.isLoggedIn()) {
-                    liff.login();
+                    liff.login(window.location.search);
                 } else {
                     this.getProfile()
                 }
