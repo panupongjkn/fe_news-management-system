@@ -3,6 +3,7 @@ import { Input } from 'antd'
 import axios from 'axios'
 import styled from 'styled-components'
 
+const liff = window.liff
 const RoleBox = styled.div`
     background-color : ${props => props.selected ? "#050042" : "white"};
     color: ${props => props.selected ? "white" : "#050042"};
@@ -31,7 +32,7 @@ const SelectRole = (props) => {
 
                     {props.role.map((role, key) => {
                         return (
-                            <RoleBox onClick={() => props.onSelectRole(role.ID)} selected={props.user.roleid === role.ID ? true : false} className="border rounded py-2" key={key}>
+                            <RoleBox onClick={() => props.onSelectRole(role.ID)} selected={props.user.roleid === role.ID ? true : false} className="border rounded py-2 mb-3" key={key}>
                                 {role.RoleName}
                             </RoleBox>
                         )
@@ -99,6 +100,33 @@ class Register extends React.Component {
                 this.setState({ newstype: newstypearr })
             })
         })
+    }
+    connectLiff = () => {
+        liff.init({ liffId: "1234567890-XXXXXXXXX" }, () => {
+            if (liff.isLoggedIn()) {
+                liff.getProfile().then(profile => {
+                    const userProfile = profile.userId;
+                    const displayName = profile.displayName;
+                    const statusMessage = profile.statusMessage;
+                    const pictureUrl = profile.pictureUrl;
+                    const email = liff.getDecodedIDToken().email;
+                    console.log(userProfile, displayName, statusMessage, pictureUrl, email)
+                    this.setState({
+                        line : {
+                            profile: userProfile,
+                            display: displayName,
+                            status: statusMessage,
+                            pictureUrl: pictureUrl,
+                            email: email,
+                        }
+                    })
+                }).catch(
+                    err => console.error(err)
+                );
+            } else {
+                liff.login();
+            }
+        }, err => console.error(err.code, err.message));
     }
     showComponent = () => {
         if (this.state.component === 1) {
@@ -171,7 +199,6 @@ class Register extends React.Component {
         await this.setState(prevState => ({
             newstypes: newstypes
         }))
-        console.log(this.state.newstype)
     }
     onBackToSelectRole = (e) => {
         e.preventDefault();
@@ -194,11 +221,13 @@ class Register extends React.Component {
                 },
                 error: false,
             }))
+            console.log(this.state.user)
         }
     }
     render() {
         return (
             <div className="container pt-5">
+                status: {this.state.line.status}
                 {this.showComponent()}
             </div>
         )
