@@ -110,7 +110,7 @@ class Register extends React.Component {
         })
     }
     connectLiff = () => {
-        liff.init({ liffId: "1234567890-XXXXXXXXX" }, () => {
+        liff.init({ liffId: "1654010598-xR8ZnwJ2" }, () => {
             if (liff.isLoggedIn()) {
                 liff.getProfile().then(profile => {
                     const userProfile = profile.userId;
