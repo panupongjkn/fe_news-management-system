@@ -91,32 +91,30 @@ class Register extends React.Component {
         }
     }
     async componentDidMount() {
-        await liff.init({ liffId: "1654010598-xR8ZnwJ2" })
-        const profile = await liff.getProfile()
-        await this.setState({
-            line : {
-                displayName: profile.displayName,
-                userId: profile.userId,
-                pictureUrl: profile.pictureUrl,
-                email: liff.getDecodedIDToken().email
+        let query = new URLSearchParams(window.location.search)
+        this.setState({
+            line:{
+                displayName: query.get("name"),
+                userId: query.get("userid"),
+                pictureUrl: query.get("picture"),
+                email: query.get("email"),
             }
         })
-        // let { system, systemid } = this.props.match.params
-        // await axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemname=${system}&systemid=${systemid}`).then(async res => {
-        //     this.setState({ role: res.data })
-        //     console.log(res.data)
-        //     await axios.get(`${process.env.REACT_APP_BE_PATH}/news/newstype/allnewstype?systemname=${system}&systemid=${systemid}`).then(async res => {
-        //         let newstypearr = []
-        //         await res.data.forEach(newstype => {
-        //             let newstypedata = {
-        //                 ...newstype,
-        //                 selected: false
-        //             }
-        //             newstypearr.push(newstypedata)
-        //         });
-        //         this.setState({ newstype: newstypearr })
-        //     })
-        // })
+        let { system, systemid } = this.props.match.params
+        await axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemname=${system}&systemid=${systemid}`).then(async res => {
+            this.setState({ role: res.data })
+            await axios.get(`${process.env.REACT_APP_BE_PATH}/news/newstype/allnewstype?systemname=${system}&systemid=${systemid}`).then(async res => {
+                let newstypearr = []
+                await res.data.forEach(newstype => {
+                    let newstypedata = {
+                        ...newstype,
+                        selected: false
+                    }
+                    newstypearr.push(newstypedata)
+                });
+                this.setState({ newstype: newstypearr })
+            })
+        })
     }
     showComponent = () => {
         if (this.state.component === 1) {
