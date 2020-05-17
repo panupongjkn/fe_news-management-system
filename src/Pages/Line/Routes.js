@@ -16,6 +16,7 @@ class Routes extends React.Component {
             path: path,
             redirect: true
         })
+        console.log(window.location.search)
     }
     render() {
         // if(this.state.redirect){
