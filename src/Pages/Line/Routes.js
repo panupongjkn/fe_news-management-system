@@ -19,18 +19,10 @@ class Routes extends React.Component {
     async componentDidMount() {
         const queryString = await decodeURIComponent(window.location.search).replace("?liff.state=", "");
         let query = await new URLSearchParams(queryString)
-        if (query.get("system") !== null) {
-            await localStorage.setItem("system", query.get("system"))
-            await localStorage.setItem("systemid", query.get("systemid"))
-        } else {
-            let path = await "/line/" + localStorage.getItem("system") + "/" + localStorage.getItem("systemid") + "/register"
-            await this.setState({
-                path: path,
-            })
-            localStorage.clear()
-        }
-    }
-    getProfile = async () => {
+        let path = await "/line/" + query.get("system") + "/" + query.get("systemid") + "/register"
+        await this.setState({
+            path: path,
+        })
         await liff.init({ liffId: "1654010598-xR8ZnwJ2" })
         const profile = await liff.getProfile()
         await this.setState({
@@ -42,21 +34,22 @@ class Routes extends React.Component {
             }
         })
     }
-    render() {
-        // if (this.state.redirect) {
-        //     return <Redirect push to={this.state.path} />
-        // }
-        return (
-            <div>
-                Redirect to {this.state.path}
-                <p>userid: {this.state.line.userId}</p>
-                <button onClick={this.getProfile}>Get</button>
-                <Link to={this.state.path}>
-                    <button>Check</button>
-                </Link>
-            </div>
-        )
-    }
+}
+render() {
+    // if (this.state.redirect) {
+    //     return <Redirect push to={this.state.path} />
+    // }
+    return (
+        <div>
+            Redirect to {this.state.path}
+            <p>userid: {this.state.line.userId}</p>
+            <button onClick={this.getProfile}>Get</button>
+            <Link to={this.state.path}>
+                <button>Check</button>
+            </Link>
+        </div>
+    )
+}
 }
 
 export default Routes
