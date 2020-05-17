@@ -99,7 +99,7 @@ class Register extends React.Component {
         liff.init({ liffId: '1654010598-xR8ZnwJ2' })
             .then(async () => {
                 if (!liff.isLoggedIn()) {
-                    liff.login();
+                    liff.login({ redirectUri: window.location.href }    );
                 }
             })
             .catch((err) => {
