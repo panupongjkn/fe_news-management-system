@@ -77,6 +77,13 @@ class Register extends React.Component {
                 roleid: 0,
                 newsInterested: [],
             },
+            line: {
+                profile: "",
+                display: "",
+                status: "",
+                pictureUrl: "",
+                email: "",
+            },
             component: 1,
             role: [],
             newstype: [],
@@ -84,6 +91,7 @@ class Register extends React.Component {
         }
     }
     async componentDidMount() {
+        this.connectLiff()
         let { system, systemid } = this.props.match.params
         await axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemname=${system}&systemid=${systemid}`).then(async res => {
             this.setState({ role: res.data })
@@ -112,7 +120,7 @@ class Register extends React.Component {
                     const email = liff.getDecodedIDToken().email;
                     console.log(userProfile, displayName, statusMessage, pictureUrl, email)
                     this.setState({
-                        line : {
+                        line: {
                             profile: userProfile,
                             display: displayName,
                             status: statusMessage,
