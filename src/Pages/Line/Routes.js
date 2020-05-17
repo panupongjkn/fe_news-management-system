@@ -21,52 +21,52 @@ class Routes extends React.Component {
         }
     }
     async componentDidMount() {
-        // const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
-        // let query = new URLSearchParams(queryString)
-        // let path = "/line/" + query.get("system") + "/" + query.get("systemid") + "/register"
-        // await this.setState({
-        //     path: path,
-        //     redirect: true
-        // })
-        liff.init({ liffId: '1654010598-xR8ZnwJ2' })
-            .then(async () => {
-                this.getProfile()
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                }else{
-                    this.getProfile()
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-            });
-    }
-    getProfile = async () => {
-        liff.getProfile().then(async dataInfo => {
-            await this.setState({
-                name: dataInfo.displayName,
-                userLineID: dataInfo.userId,
-                pictureUrl: dataInfo.pictureUrl,
-                statusMessage: dataInfo.statusMessage
-            });
-        });
-
-        const languageDevice = liff.getLanguage();
-        const versionSDK = liff.getVersion();
-        const client = liff.isInClient();
-        const isLogin = liff.isLoggedIn();
-        const os = liff.getOS();
-        
-        console.log(this.state)
+        const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
+        let query = new URLSearchParams(queryString)
+        let path = "/line/" + query.get("system") + "/" + query.get("systemid") + "/register"
         await this.setState({
-            languageDevice: languageDevice,
-            versionSDK: versionSDK,
-            client: (client === true) ? 'YES' : 'NO',
-            isLogin: (isLogin === true) ? 'Login' : 'Not Login',
-            os: os
-        });
-        console.log(this.state)
+            path: path,
+            // redirect: true
+        })
+        // liff.init({ liffId: '1654010598-xR8ZnwJ2' })
+        //     .then(async () => {
+        //         this.getProfile()
+        //         if (!liff.isLoggedIn()) {
+        //             liff.login();
+        //         }else{
+        //             this.getProfile()
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.log(err)
+        //     });
     }
+    // getProfile = async () => {
+    //     liff.getProfile().then(async dataInfo => {
+    //         await this.setState({
+    //             name: dataInfo.displayName,
+    //             userLineID: dataInfo.userId,
+    //             pictureUrl: dataInfo.pictureUrl,
+    //             statusMessage: dataInfo.statusMessage
+    //         });
+    //     });
+
+    //     const languageDevice = liff.getLanguage();
+    //     const versionSDK = liff.getVersion();
+    //     const client = liff.isInClient();
+    //     const isLogin = liff.isLoggedIn();
+    //     const os = liff.getOS();
+        
+    //     console.log(this.state)
+    //     await this.setState({
+    //         languageDevice: languageDevice,
+    //         versionSDK: versionSDK,
+    //         client: (client === true) ? 'YES' : 'NO',
+    //         isLogin: (isLogin === true) ? 'Login' : 'Not Login',
+    //         os: os
+    //     });
+    //     console.log(this.state)
+    // }
 
     render() {
         // if (this.state.redirect) {
