@@ -30,9 +30,9 @@ export default function Routes() {
     return (
         <Router>
             <Switch>
-                {/* <Route path="/line/:system/:systemid/register" render={(props) => <RegisterLine {...props}/>} /> */}
+                <Route path="/line/:system/:systemid/register" render={(props) => <RegisterLine {...props}/>} />
                 <Route path="/line" render={(props) => <LineRoutes {...props}/>} />
-                {/* <Route path="/login" render={(props) => <LoginPage {...props}/>} />
+                <Route path="/login" render={(props) => <LoginPage {...props}/>} />
                 <Route path="/register" render={(props) => <RegisterPage {...props}/>} />
                 <Route path="/systems" render={(props) => <SystemsPage {...props}/>} />
                 <Route path="/system/create" render={(props) => <CreateSystemPage {...props}/>} />
@@ -46,7 +46,7 @@ export default function Routes() {
                 <Route path="/:system/:systemid/dashboard" render={(props) => <DashboardPage {...props}/>} />
                 <Route path="/:system/:systemid/role" render={(props) => <RoleUserPage {...props}/>} />
                 <Route path="/test" render={(props) => <Layout {...props}/>} />
-                <Route render={() => <Redirect push to="/login" />} /> */}
+                <Route render={() => <Redirect push to="/login" />} />
             </Switch>
         </Router>
     )

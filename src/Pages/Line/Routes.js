@@ -24,12 +24,12 @@ class Routes extends React.Component {
         console.log("systemid", query.get("systemid"))
     }
     render() {
-        // if(this.state.redirect){
-        //     return <Redirect push to={this.state.path}/>
-        // }
+        if(this.state.redirect){
+            return <Redirect push to={this.state.path}/>
+        }
         return (
             <div>
-                {this.state.path}
+                Redirect to {this.state.path}
             </div>
         )
     }
