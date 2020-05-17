@@ -101,22 +101,22 @@ class Register extends React.Component {
                 email: liff.getDecodedIDToken().email
             }
         })
-        let { system, systemid } = this.props.match.params
-        await axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemname=${system}&systemid=${systemid}`).then(async res => {
-            this.setState({ role: res.data })
-            console.log(res.data)
-            await axios.get(`${process.env.REACT_APP_BE_PATH}/news/newstype/allnewstype?systemname=${system}&systemid=${systemid}`).then(async res => {
-                let newstypearr = []
-                await res.data.forEach(newstype => {
-                    let newstypedata = {
-                        ...newstype,
-                        selected: false
-                    }
-                    newstypearr.push(newstypedata)
-                });
-                this.setState({ newstype: newstypearr })
-            })
-        })
+        // let { system, systemid } = this.props.match.params
+        // await axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemname=${system}&systemid=${systemid}`).then(async res => {
+        //     this.setState({ role: res.data })
+        //     console.log(res.data)
+        //     await axios.get(`${process.env.REACT_APP_BE_PATH}/news/newstype/allnewstype?systemname=${system}&systemid=${systemid}`).then(async res => {
+        //         let newstypearr = []
+        //         await res.data.forEach(newstype => {
+        //             let newstypedata = {
+        //                 ...newstype,
+        //                 selected: false
+        //             }
+        //             newstypearr.push(newstypedata)
+        //         });
+        //         this.setState({ newstype: newstypearr })
+        //     })
+        // })
     }
     showComponent = () => {
         if (this.state.component === 1) {

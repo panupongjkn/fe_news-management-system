@@ -1,8 +1,6 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 
-const liff = window.liff
-
 class Routes extends React.Component {
     constructor(props) {
         super(props)
@@ -17,16 +15,19 @@ class Routes extends React.Component {
         let path = "/line/" + query.get("system") + "/" + query.get("systemid") + "/register"
         await this.setState({
             path: path,
-            redirect: true
+            // redirect: true
         })
     }
     render() {
-        if (this.state.redirect) {
-            return <Redirect push to={this.state.path} />
-        }
+        // if (this.state.redirect) {
+        //     return <Redirect push to={this.state.path} />
+        // }
         return (
             <div>
                 Redirect to {this.state.path}
+                <Link to={this.state.path}>
+                    <button>Check</button>
+                </Link>
             </div>
         )
     }
