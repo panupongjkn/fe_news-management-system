@@ -17,19 +17,11 @@ class Routes extends React.Component {
         }
     }
     async componentDidMount() {
-        // const queryString = await decodeURIComponent(window.location.search).replace("?cache=12345&?liff.state=", "");
-        // let query = await new URLSearchParams(queryString)
-        // let path = await "/line/" + query.get("system") + "/" + query.get("systemid") + "/register"
-        await liff.init({ liffId: "1654010598-xR8ZnwJ2" })
-        const profile = await liff.getProfile()
-        await this.setState({
-            // path: path,
-            line: {
-                displayName: profile.displayName,
-                userId: profile.userId,
-                pictureUrl: profile.pictureUrl,
-                email: liff.getDecodedIDToken().email
-            }
+        const queryString = await decodeURIComponent(window.location.search).replace("?cache=12345&?liff.state=", "");
+        let query = await new URLSearchParams(queryString)
+        let path = await "/line/" + query.get("system") + "/" + query.get("systemid") + "/register"
+        this.setState({
+            path: path,
         })
     }
     render() {
@@ -39,8 +31,7 @@ class Routes extends React.Component {
         return (
             <div>
                 Redirect to {this.state.path}
-                <p>userid: {this.state.line.userId}</p>
-                <Link to={this.state.path+`?name=${this.state.line.displayName}&userid=${this.state.line.userId}&picture=${this.state.line.pictureUrl}&email=${this.state.line.email}`}>
+                <Link to={this.state.path}>
                     <button>Check</button>
                 </Link>
             </div>
