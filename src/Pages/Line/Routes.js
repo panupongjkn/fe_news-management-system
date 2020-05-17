@@ -35,6 +35,13 @@ class Routes extends React.Component {
             accessToken: liff.getAccessToken(),
             client: liff.isInClient()
         })
+        const profile = await liff.getProfile()
+        this.setState({
+            pictureUrl: profile.pictureUrl,
+            userLineID: profile.userId,
+            statusMessage: profile.statusMessage,
+
+        })
         
     }
     // getProfile = async () => {
@@ -76,6 +83,9 @@ class Routes extends React.Component {
                 <p>version: {this.state.versionSDK}</p>
                 <p>token: {this.state.accessToken}</p>
                 <p>client: {this.state.client}</p>
+                <p>pictureUrl: <img src={this.state.pictureUrl}/></p>
+                <p>userId: {this.state.userLineID}</p>
+                <p>status: {this.state.statusMessage}</p>
             </div>
         )
     }
