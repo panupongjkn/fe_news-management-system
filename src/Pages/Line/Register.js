@@ -91,17 +91,6 @@ class Register extends React.Component {
         }
     }
     async componentDidMount() {
-        await liff.init({ liffId: "1654010598-xR8ZnwJ2" })
-        const profile = await liff.getProfile()
-        await this.setState({
-            // path: path,
-            line: {
-                displayName: profile.displayName,
-                userId: profile.userId,
-                pictureUrl: profile.pictureUrl,
-                email: liff.getDecodedIDToken().email
-            }
-        })
         // let query = new URLSearchParams(window.location.search)
         // this.setState({
         //     line:{
