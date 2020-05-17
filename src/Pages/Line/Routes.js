@@ -10,13 +10,15 @@ class Routes extends React.Component {
         }
     }
     componentDidMount() {
-        let query = new URLSearchParams(this.props.location.search)
+        const queryString = decodeURIComponent(window.location.search).replace("?cache=1234?liff.state=", "");
+        let query = new URLSearchParams(queryString)
         let path = "/line/"+query.get("system")+"/"+query.get("systemid")+"/register"
         this.setState({
             path: path,
             redirect: true
         })
         console.log("query", window.location.search)
+        console.log("query2", query)
     }
     render() {
         // if(this.state.redirect){
