@@ -33,6 +33,8 @@ class Routes extends React.Component {
                 this.getProfile()
                 if (!liff.isLoggedIn()) {
                     liff.login();
+                }else{
+                    this.getProfile()
                 }
             })
             .catch((err) => {
@@ -54,7 +56,8 @@ class Routes extends React.Component {
         const client = liff.isInClient();
         const isLogin = liff.isLoggedIn();
         const os = liff.getOS();
-
+        
+        console.log(this.state)
         await this.setState({
             languageDevice: languageDevice,
             versionSDK: versionSDK,
@@ -62,6 +65,7 @@ class Routes extends React.Component {
             isLogin: (isLogin === true) ? 'Login' : 'Not Login',
             os: os
         });
+        console.log(this.state)
     }
 
     render() {
