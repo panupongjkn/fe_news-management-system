@@ -30,11 +30,10 @@ class Routes extends React.Component {
             localStorage.clear()
         }
     }
-    getProfile = () => {
+    getProfile = async () => {
         await liff.init({ liffId: "1654010598-xR8ZnwJ2" })
         const profile = await liff.getProfile()
         await this.setState({
-            path: path,
             line: {
                 displayName: profile.displayName,
                 userId: profile.userId,
@@ -50,6 +49,7 @@ class Routes extends React.Component {
         return (
             <div>
                 Redirect to {this.state.path}
+                <p>userid: {this.state.line.userId}</p>
                 <button onClick={this.getProfile}>Get</button>
                 <Link to={this.state.path}>
                     <button>Check</button>
