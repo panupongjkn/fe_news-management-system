@@ -99,9 +99,10 @@ class Register extends React.Component {
         console.log(window.location.href)
         liff.init({ liffId: '1654010598-xR8ZnwJ2' })
             .then(async () => {
-                if (!liff.isLoggedIn()) {
-                    liff.login({ redirectUri: window.location.href });
-                }
+                this.getProfile()
+                // if (!liff.isLoggedIn()) {
+                //     liff.login({ redirectUri: window.location.href });
+                // }
             })
             .catch((err) => {
                 console.log(err)
@@ -157,26 +158,26 @@ class Register extends React.Component {
     //             pictureUrl: idToken.picture,
     //         })
     //     }).catch((err) => {
-            // Error happens during initialization
-            // console.log(err.code, err.message);
-        // });
-        // if (liff.isLoggedIn()) {
-        //     liff.getProfile().then(async profile => {
-        //         await this.setState({
-        //             line: {
-        //                 profile: profile.userId,
-        //                 display: profile.displayName,
-        //                 status: profile.statusMessage,
-        //                 pictureUrl: profile.pictureUrl,
-        //                 email: liff.getDecodedIDToken().email,
-        //             }
-        //         })
-        //     }).catch(
-        //         err => console.error(err)
-        //     );
-        // } else {
-        //     liff.login();
-        // }
+    // Error happens during initialization
+    // console.log(err.code, err.message);
+    // });
+    // if (liff.isLoggedIn()) {
+    //     liff.getProfile().then(async profile => {
+    //         await this.setState({
+    //             line: {
+    //                 profile: profile.userId,
+    //                 display: profile.displayName,
+    //                 status: profile.statusMessage,
+    //                 pictureUrl: profile.pictureUrl,
+    //                 email: liff.getDecodedIDToken().email,
+    //             }
+    //         })
+    //     }).catch(
+    //         err => console.error(err)
+    //     );
+    // } else {
+    //     liff.login();
+    // }
     // }
     showComponent = () => {
         if (this.state.component === 1) {
@@ -277,15 +278,15 @@ class Register extends React.Component {
     render() {
         return (
             <div className="container pt-5">
-                {/* <div className="support">
-                    {
-                        (this.state.pictureUrl && this.state.pictureUrl != '')
-                            ?
-                            <img width="25%" src={this.state.pictureUrl} />
-                            :
-                            null
-                    }
-                </div>
+                {/* <div className="support"> */}
+                {
+                    (this.state.pictureUrl && this.state.pictureUrl != '')
+                        ?
+                        <img width="25%" src={this.state.pictureUrl} />
+                        :
+                        null
+                }
+                {/* </div> */}
                 {
                     (this.state.name && this.state.name != '')
                         ?
@@ -345,14 +346,14 @@ class Register extends React.Component {
                 <div className="support">*/}
                     <button onClick={this.getProfile()} style={{ marginRight: '20px' }}>
                         Getdata INFO
-                    </button> 
+                    </button>
                     {/* <Button variant="contained" onClick={this.sendMessage.bind(this)} style={{ marginRight: '20px' }}>
                         Send Message
             </Button>
                     <Button variant="contained" onClick={this.closeLIFF.bind(this)} color="secondary">
                         Close LIFF
             </Button> */}
-                {/* </div> */}
+                </div>
                 {/* {this.showComponent()} */}
             </div>
         )
