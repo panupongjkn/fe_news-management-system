@@ -1,6 +1,7 @@
 import React from 'react'
 import { Redirect, Link } from 'react-router-dom'
 
+const liff = window.liff
 class Routes extends React.Component {
     constructor(props) {
         super(props)
