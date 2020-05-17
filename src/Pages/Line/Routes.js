@@ -34,7 +34,6 @@ class Routes extends React.Component {
             }
         })
     }
-}
 render() {
     // if (this.state.redirect) {
     //     return <Redirect push to={this.state.path} />
