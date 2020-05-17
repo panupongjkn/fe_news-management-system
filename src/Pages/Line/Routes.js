@@ -17,19 +17,19 @@ class Routes extends React.Component {
         }
     }
     async componentDidMount() {
-        const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
-        let query = new URLSearchParams(queryString)
-        let path = "/line/" + query.get("system") + "/" + query.get("systemid") + "/register"
-        // await liff.init({ liffId: "1654010598-xR8ZnwJ2" })
-        // const profile = await liff.getProfile()
+        const queryString = await decodeURIComponent(window.location.search).replace("?cache=12345&?liff.state=", "");
+        let query = await new URLSearchParams(queryString)
+        let path = await "/line/" + query.get("system") + "/" + query.get("systemid") + "/register"
+        await liff.init({ liffId: "1654010598-xR8ZnwJ2" })
+        const profile = await liff.getProfile()
         await this.setState({
             path: path,
-            // line: {
-            //     displayName: profile.displayName,
-            //     userId: profile.userId,
-            //     pictureUrl: profile.pictureUrl,
-            //     email: liff.getDecodedIDToken().email
-            // }
+            line: {
+                displayName: profile.displayName,
+                userId: profile.userId,
+                pictureUrl: profile.pictureUrl,
+                email: liff.getDecodedIDToken().email
+            }
         })
     }
     render() {
