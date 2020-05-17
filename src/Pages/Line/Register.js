@@ -3,8 +3,6 @@ import { Input } from 'antd'
 import axios from 'axios'
 import styled from 'styled-components'
 
-const liff = window.liff
-
 const RoleBox = styled.div`
     background-color : ${props => props.selected ? "#050042" : "white"};
     color: ${props => props.selected ? "white" : "#050042"};
@@ -101,7 +99,6 @@ class Register extends React.Component {
                 this.setState({ newstype: newstypearr })
             })
         })
-        liff.init({ liffId: "1654010598-xR8ZnwJ2" });
     }
     showComponent = () => {
         if (this.state.component === 1) {

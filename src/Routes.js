@@ -24,12 +24,14 @@ import DashboardPage from './Pages/Dashboard'
 import AllTargetGroupPage from './Pages/AllTargetGroup';
 import RoleUserPage from './Pages/RoleUser'
 //Line
+import LineRoutes from './Pages/Line/Routes'
 import RegisterLine from './Pages/Line/Register'
 export default function Routes() {
     return (
         <Router>
             <Switch>
-                <Route path="/line/register/:system/:systemid" render={(props) => <RegisterLine {...props}/>} />
+                <Route path="/line" render={(props) => <LineRoutes {...props}/>} />
+                <Route path="/line/:system/:systemid/register" render={(props) => <RegisterLine {...props}/>} />
                 <Route path="/login" render={(props) => <LoginPage {...props}/>} />
                 <Route path="/register" render={(props) => <RegisterPage {...props}/>} />
                 <Route path="/systems" render={(props) => <SystemsPage {...props}/>} />
