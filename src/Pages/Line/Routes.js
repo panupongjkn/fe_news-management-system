@@ -28,18 +28,18 @@ class Routes extends React.Component {
             path: path,
             // redirect: true
         })
-        // liff.init({ liffId: '1654010598-xR8ZnwJ2' })
-        //     .then(async () => {
-        //         this.getProfile()
-        //         if (!liff.isLoggedIn()) {
-        //             liff.login();
-        //         }else{
-        //             this.getProfile()
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         console.log(err)
-        //     });
+        liff.init({ liffId: '1654010598-xR8ZnwJ2' })
+            .then(async () => {
+                this.getProfile()
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                } else {
+                    this.getProfile()
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            });
     }
     // getProfile = async () => {
     //     liff.getProfile().then(async dataInfo => {
@@ -56,7 +56,7 @@ class Routes extends React.Component {
     //     const client = liff.isInClient();
     //     const isLogin = liff.isLoggedIn();
     //     const os = liff.getOS();
-        
+
     //     console.log(this.state)
     //     await this.setState({
     //         languageDevice: languageDevice,
