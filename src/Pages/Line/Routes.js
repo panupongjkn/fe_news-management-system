@@ -26,7 +26,8 @@ class Routes extends React.Component {
         // const queryString = decodeURIComponent(window.location.search).replace("?liff.state=", "");
         // let query = new URLSearchParams(queryString)
         // let path = "/line/" + query.get("system") + "/" + query.get("systemid") + "/register"
-        await liff.init({ liffId: "1654010598-xR8ZnwJ2"})
+        await liff.init({ liffId: "1654010598-xR8ZnwJ2" })
+        const profile = await liff.getProfile()
         await this.setState({
             // path: path,
             // redirect: true
@@ -34,17 +35,17 @@ class Routes extends React.Component {
             languageDevice: liff.getLanguage(),
             versionSDK: liff.getVersion(),
             accessToken: liff.getAccessToken(),
-            client: liff.isInClient()
-        })
-        const profile = await liff.getProfile()
-        // const email = liff.getDecodedIDToken().email()
-        this.setState({
-            pictureUrl: profile.pictureUrl,
+            client: liff.isInClient(),
             userLineID: profile.userId,
             statusMessage: profile.statusMessage,
-            // email: email,
+            pictureUrl: profile.pictureUrl,
         })
-        
+        const email = liff.getDecodedIDToken().email
+        this.setState({
+
+            email: email,
+        })
+
     }
     // getProfile = async () => {
     //     liff.getProfile().then(async dataInfo => {
@@ -85,7 +86,7 @@ class Routes extends React.Component {
                 <p>version: {this.state.versionSDK}</p>
                 <p>token: {this.state.accessToken}</p>
                 <p>client: {this.state.client}</p>
-                <p>pictureUrl: <img src={this.state.pictureUrl}/></p>
+                <p>pictureUrl: <img src={this.state.pictureUrl} /></p>
                 <p>userId: {this.state.userLineID}</p>
                 <p>status: {this.state.statusMessage}</p>
                 <p>email: {this.state.email}</p>
