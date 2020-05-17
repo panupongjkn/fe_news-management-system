@@ -37,12 +37,12 @@ class Routes extends React.Component {
             client: liff.isInClient()
         })
         const profile = await liff.getProfile()
-        const email = liff.getDecodedIDToken().email()
+        // const email = liff.getDecodedIDToken().email()
         this.setState({
             pictureUrl: profile.pictureUrl,
             userLineID: profile.userId,
             statusMessage: profile.statusMessage,
-            email: email,
+            // email: email,
         })
         
     }
