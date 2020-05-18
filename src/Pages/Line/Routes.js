@@ -17,12 +17,12 @@ class Routes extends React.Component {
         }
     }
     async componentDidMount() {
-        const queryString = await decodeURIComponent(window.location.search).replace("?liff.state=", "");
-        let query = await new URLSearchParams(queryString)
-        let path = await "/line/" + query.get("system") + "/" + query.get("systemid") + "/register"
-        await this.setState({
-            path: path,
-        })
+        let query = await new URLSearchParams(window.location.search)
+        if(query.get("liff.state") == null ) {
+            await this.setState({
+                redirect: true,
+            })
+        }
         await liff.init({ liffId: "1654010598-xR8ZnwJ2" })
         const profile = await liff.getProfile()
         await this.setState({
@@ -35,9 +35,9 @@ class Routes extends React.Component {
         })
     }
 render() {
-    // if (this.state.redirect) {
-    //     return <Redirect push to={this.state.path} />
-    // }
+    if (this.state.redirect) {
+        return <Redirect push to="/login" />
+    }
     return (
         <div>
             {/* Redirect to {this.state.path}

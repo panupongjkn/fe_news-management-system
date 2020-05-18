@@ -231,7 +231,6 @@ class Register extends React.Component {
     render() {
         return (
             <div className="container pt-5">
-                <p>systemid: {this.state.systemid}</p>
                 {this.showComponent()}
             </div>
         )

@@ -28,7 +28,6 @@ class SiderDemo extends React.Component {
     }
 
     setData = async () => {
-        console.log("data", this.props.data)
         let data = this.props.data
         this.setState({
             page: data.page,
@@ -43,7 +42,6 @@ class SiderDemo extends React.Component {
     }
 
     onCollapse = collapsed => {
-        console.log(collapsed);
         this.setState({ collapsed });
     };
 
@@ -53,7 +51,7 @@ class SiderDemo extends React.Component {
                 <Sider style={{ color: "white" }} width="250" collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
                     <Menu theme="dark" defaultOpenKeys={[this.state.pageType]} defaultSelectedKeys={[this.state.page]} mode="inline">
                         <Menu.Item
-                            onClick={() => this.props.history.push(`/`)}
+                            onClick={() => this.props.history.push(`/systems`)}
                             key="0"
                             className="pl-4 pt-2" style={{ height: "60px" }}
                             icon={<img alt="News Management System" className="mr-2" src="/image/pic news.png" width="35px" height="35px" />}
