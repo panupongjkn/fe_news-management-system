@@ -27,7 +27,6 @@ import AnnounceNewsPage from './Pages/AnnounceNews'
 //Line
 import LineRoutes from './Pages/Line/Routes'
 import RegisterLine from './Pages/Line/Register'
-import News from './Pages/Line/CheckAPI'
 export default function Routes() {
     return (
         <Router>
