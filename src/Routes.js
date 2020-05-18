@@ -23,19 +23,23 @@ import CreateTargetGroupPage from './Pages/CreateTargetGroup'
 import DashboardPage from './Pages/Dashboard'
 import AllTargetGroupPage from './Pages/AllTargetGroup';
 import RoleUserPage from './Pages/RoleUser'
+import AnnounceNewsPage from './Pages/AnnounceNews'
 //Line
 import LineRoutes from './Pages/Line/Routes'
 import RegisterLine from './Pages/Line/Register'
+import News from './Pages/Line/CheckAPI'
 export default function Routes() {
     return (
         <Router>
             <Switch>
                 <Route path="/line/:system/:systemid/register" render={(props) => <RegisterLine {...props}/>} />
+                <Route path="/line/news/:newsid" render={(props) => <NewsPage {...props}/>} />
                 <Route path="/login" render={(props) => <LoginPage {...props}/>} />
                 <Route path="/register" render={(props) => <RegisterPage {...props}/>} />
                 <Route path="/systems" render={(props) => <SystemsPage {...props}/>} />
                 <Route path="/system/create" render={(props) => <CreateSystemPage {...props}/>} />
                 <Route path="/:system/:systemid/home" render={(props) => <HomeSystemPage {...props}/>} />
+                <Route path="/:system/:systemid/news/:newsid/announce" render={(props) => <AnnounceNewsPage {...props}/>} />
                 <Route path="/:system/:systemid/news/:newsname/:newsid" render={(props) => <NewsPage {...props}/>} />
                 <Route path="/:system/:systemid/news/allnews" render={(props) => <AllNewsPage {...props}/>} />
                 <Route path="/:system/:systemid/news/createnews" render={(props) => <CreateNewsPage {...props}/>} />

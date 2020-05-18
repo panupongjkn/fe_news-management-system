@@ -4,11 +4,12 @@ import styled from 'styled-components'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import moment from 'moment'
+import { Redirect } from 'react-router-dom'
 
 import CreateNewsComponent from '../Components/CreateNewsPage/CreateNews'
 import CreateMessageComponent from '../Components/CreateNewsPage/CreateMessage'
 import PreviewComponent from '../Components/CreateNewsPage/Preview'
-import { Redirect } from 'react-router-dom'
+import AnnounceNews from '../Components/AnnouceNews'
 
 const Menu = styled.button`
     background-color: ${props => props.selected ? "#050042" : "white"};
@@ -50,6 +51,7 @@ class CreateNewsPage extends React.Component {
             },
             step: 1,
             redirect: false,
+            path: ""
         }
     }
     async componentWillMount() {
@@ -248,28 +250,64 @@ class CreateNewsPage extends React.Component {
             }
         }).then(res => {
             let title = ""
-            if(status==="draft") title = "Draft news success"
-            if(status==="publish") title = "Create news success"
-            Swal.fire({
-                icon: 'success',
-                title: title,
-                showConfirmButton: true,
-                timer: 3000
-            }).then((result) => {
-                this.setState({ redirect: true })
-            })
+            if (status === "draft") {
+                Swal.fire({
+                    icon: 'success',
+                    title: "Draft news success",
+                    showConfirmButton: true,
+                    timer: 3000
+                }).then((result) => {
+                    this.setState({ redirect: true })
+                })
+            } else if (status === "publish") {
+                Swal.fire({
+                    icon: 'success',
+                    title: "Draft news success",
+                    showConfirmButton: true,
+                    timer: 3000
+                }).then((result) => {
+                    Swal.fire({
+                        title: "Do you want to announce the news?",
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes'
+                    }).then((result) => {
+                        if (result.value) {
+                            this.setState({
+                                path: `/${this.state.data.system}/${this.state.data.systemid}/news/${res.data}/announce`,
+                                redirect: true,
+
+                            })
+                        } else {
+                            this.setState({
+                                path: `/${this.state.data.system}/${this.state.data.systemid}/news/allnews`,
+                                redirect: true,
+                            })
+                        }
+                    })
+                })
+            }
+        }).catch(err => {
+            if (err.response) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: err.response.data,
+                })
+            }
         })
     }
 
     render() {
         if (this.state.redirect) {
-            return <Redirect push to={`/${this.state.data.system}/${this.state.data.systemid}/news/allnews`} />
+            return <Redirect push to={this.state.path} />
         }
         return (
             <Layout {...this.props} data={this.state.data} >
                 <div className="container pt-3">
-                    <h3 className={`col-12 p-0 ${this.state.step === 1 ? "" : "d-none"}`}>Create news</h3>
-                    <div className={`col-12 p-0 ${this.state.step === 1 ? "" : "d-none"}`}>
+                    <h3 className={`col - 12 p - 0 ${this.state.step === 1 ? "" : "d-none"}`}>Create news</h3>
+                    <div className={`col - 12 p - 0 ${this.state.step === 1 ? "" : "d-none"}`}>
                         <div className="row">
                             <div className="col pr-0">
                                 <Menu
