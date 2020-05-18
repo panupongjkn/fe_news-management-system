@@ -94,7 +94,7 @@ class Register extends React.Component {
     async componentDidMount() {
         await liff.init({ liffId: "1654010598-xR8ZnwJ2" })
         const profile = await liff.getProfile()
-        const { systemid } = this.props.match.params
+        const { system, systemid } = this.props.match.params
         await this.setState({
             line: {
                 displayName: profile.displayName,
@@ -104,7 +104,6 @@ class Register extends React.Component {
             },
             systemid: systemid
         })
-        let { system, systemid } = this.props.match.params
         await axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemname=${system}&systemid=${systemid}`).then(async res => {
             this.setState({ role: res.data })
             await axios.get(`${process.env.REACT_APP_BE_PATH}/news/newstype/allnewstype?systemname=${system}&systemid=${systemid}`).then(async res => {
