@@ -84,6 +84,7 @@ class Register extends React.Component {
                 pictureUrl: '',
                 email: '',
             },
+            systemid: '',
             component: 1,
             role: [],
             newstype: [],
@@ -93,23 +94,16 @@ class Register extends React.Component {
     async componentDidMount() {
         await liff.init({ liffId: "1654010598-xR8ZnwJ2" })
         const profile = await liff.getProfile()
+        const { systemid } = this.props.match.params
         await this.setState({
             line: {
                 displayName: profile.displayName,
                 userId: profile.userId,
                 pictureUrl: profile.pictureUrl,
                 email: liff.getDecodedIDToken().email
-            }
+            },
+            systemid: systemid
         })
-        // let query = new URLSearchParams(window.location.search)
-        // this.setState({
-        //     line:{
-        //         displayName: query.get("name"),
-        //         userId: query.get("userid"),
-        //         pictureUrl: query.get("picture"),
-        //         email: query.get("email"),
-        //     }
-        // })
         let { system, systemid } = this.props.match.params
         await axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemname=${system}&systemid=${systemid}`).then(async res => {
             this.setState({ role: res.data })
@@ -220,7 +214,6 @@ class Register extends React.Component {
                 error: false,
             }))
         }
-        let { systemid } = this.props.match.params
         let data = {
             fname: this.state.user.fname,
             lname: this.state.user.lname,
@@ -228,7 +221,7 @@ class Register extends React.Component {
             newsinterested: this.state.user.newsInterested,
             email: this.state.line.email,
             line: this.state.line.userId,
-            systemid: systemid
+            systemid: this.state.systemid
         }
         axios.post(`${process.env.REACT_APP_BE_PATH}/line/register`, data).then((res) => {
             liff.closeWindow()
@@ -239,7 +232,7 @@ class Register extends React.Component {
     render() {
         return (
             <div className="container pt-5">
-                <p>userId: {this.state.line.userId}</p>
+                <p>systemid: {this.state.systemid}</p>
                 {this.showComponent()}
             </div>
         )
