@@ -9,7 +9,6 @@ import { Redirect } from 'react-router-dom'
 import CreateNewsComponent from '../Components/CreateNewsPage/CreateNews'
 import CreateMessageComponent from '../Components/CreateNewsPage/CreateMessage'
 import PreviewComponent from '../Components/CreateNewsPage/Preview'
-import AnnounceNews from '../Components/AnnouceNews'
 
 const Menu = styled.button`
     background-color: ${props => props.selected ? "#050042" : "white"};
