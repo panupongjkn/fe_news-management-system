@@ -49,6 +49,7 @@ class RoleUserPage extends React.Component {
     
 
     async componentWillMount() {
+        this.props.onLoading(true)
         const { system, systemid } = this.props.match.params
         console.log(system)
         await this.setState(prevState => ({
@@ -58,11 +59,11 @@ class RoleUserPage extends React.Component {
                 systemid: systemid,
             }
         }))
-        console.log(this.state)
-        this.GetRoleUser()
+        await this.GetRoleUser()
+        this.props.onLoading(false)
     }
-    GetRoleUser = () => {
-        axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemid=${this.state.data.systemid}&systemname=${this.state.data.system}`, {
+    GetRoleUser = async () => {
+        await axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemid=${this.state.data.systemid}&systemname=${this.state.data.system}`, {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }
@@ -77,6 +78,7 @@ class RoleUserPage extends React.Component {
         })
     }
     AddRoleUser = () => {
+        this.props.onLoading(true)
         let data = new FormData()
         data.append("systemid", this.state.data.systemid)
         data.append("rolename", this.state.RoleUser)
@@ -84,9 +86,10 @@ class RoleUserPage extends React.Component {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }
-        }).then(res => {
-            this.GetRoleUser()
-            this.setState({ RoleUser: "" })
+        }).then(async res => {
+            await this.GetRoleUser()
+            await this.setState({ RoleUser: "" })
+            this.props.onLoading(false)
         })
     }
     render() {

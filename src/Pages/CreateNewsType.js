@@ -58,12 +58,14 @@ class CreateNewsTypePage extends React.Component {
             }
         }))
     }
-    componentDidMount() {
-        this.GetNewsTypes()
+    async componentDidMount() {
+        this.props.onLoading(true)
+        await this.GetNewsTypes()
+        this.props.onLoading(false)
     }
-    GetNewsTypes = () => {
+    GetNewsTypes = async () => {
         const { system, systemid } = this.props.match.params
-        axios.get(`${process.env.REACT_APP_BE_PATH}/news/newstype/allnewstype?systemid=${systemid}&systemname=${system}`, {
+        await axios.get(`${process.env.REACT_APP_BE_PATH}/news/newstype/allnewstype?systemid=${systemid}&systemname=${system}`, {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }

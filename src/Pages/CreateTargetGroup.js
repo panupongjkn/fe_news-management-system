@@ -52,6 +52,7 @@ class CreateTargetGroupPage extends React.Component {
         })
     }
     AddTargetGroup = () => {
+        this.props.onLoading(true)
         const { systemid } = this.props.match.params
         let data = new FormData()
         data.append("systemid", systemid)
@@ -61,9 +62,10 @@ class CreateTargetGroupPage extends React.Component {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }
         }).then(res => {
-             this.setState({
-                 redirect: true
-             })
+            this.setState({
+                redirect: true
+            })
+            this.props.onLoading(false)
         })
     }
 

@@ -52,6 +52,7 @@ class CreateSystemPage extends React.Component {
     }
     onCreateSystem = (event) => {
         event.preventDefault();
+        this.props.onLoading(true)
         let lineoa = []
         if(this.state.system.checkLineOA){
             lineoa = this.state.system.lineOA
@@ -65,6 +66,7 @@ class CreateSystemPage extends React.Component {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }
         }).then(res => {
+            this.props.onLoading(false)
             this.setState({ redirect: true })
         })
     }

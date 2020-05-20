@@ -1,5 +1,7 @@
 import React from 'react'
 import { Redirect, Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
+import Loading from '../../Components/Loading'
 
 const liff = window.liff
 class Routes extends React.Component {
@@ -18,7 +20,7 @@ class Routes extends React.Component {
     }
     async componentDidMount() {
         let query = await new URLSearchParams(window.location.search)
-        if(query.get("liff.state") == null ) {
+        if (query.get("liff.state") == null) {
             await this.setState({
                 redirect: true,
             })
@@ -34,21 +36,18 @@ class Routes extends React.Component {
             }
         })
     }
-render() {
-    if (this.state.redirect) {
-        return <Redirect push to="/login" />
+    render() {
+        if (this.state.redirect) {
+            return <Redirect push to="/login" />
+        }
+        return (
+            <div>
+                <Helmet>
+                    <title>Loading...</title>
+                </Helmet>
+            </div>
+        )
     }
-    return (
-        <div>
-            {/* Redirect to {this.state.path}
-            <p>userid: {this.state.line.userId}</p>
-            <button onClick={this.getProfile}>Get</button>
-            <Link to={this.state.path}>
-                <button>Check</button>
-            </Link> */}
-        </div>
-    )
-}
 }
 
 export default Routes

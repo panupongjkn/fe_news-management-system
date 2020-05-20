@@ -21,16 +21,16 @@ class News extends React.Component {
             systemid: '',
         }
     }
-    componentDidMount() {
+    async componentDidMount() {
+        this.props.onLoading(true)
         const { newsid, system, systemid } = this.props.match.params
-        axios.get(`${process.env.REACT_APP_BE_PATH}/news/${newsid}`).then(res => {
-            console.log(res.data)
+        await axios.get(`${process.env.REACT_APP_BE_PATH}/news/${newsid}`).then(async res => {
             let news = res.data
             let postdate = new Date()
             if (news.status === "publish") {
                 postdate = news.CreatedAt
             }
-            this.setState({
+            await this.setState({
                 news: {
                     title: news.Title,
                     body: news.Body,
@@ -42,6 +42,7 @@ class News extends React.Component {
                 system: system,
                 systemid: systemid
             })
+            this.props.onLoading(false)
         })
     }
     createMarkup = () => {

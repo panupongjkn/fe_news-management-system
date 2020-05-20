@@ -61,6 +61,7 @@ class AllNewsPage extends React.Component {
         }
     }
     async componentWillMount() {
+        this.props.onLoading(true)
         const { system, systemid } = this.props.match.params
         await this.setState(prevState => ({
             data: {
@@ -81,6 +82,7 @@ class AllNewsPage extends React.Component {
                 }
             }).then(res => {
                 this.setState({ newspublish: res.data })
+                this.props.onLoading(false)
             })
         })
     }

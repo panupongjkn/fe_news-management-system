@@ -58,10 +58,11 @@ class HomeSystemPage extends React.Component {
             }
         }))
     }
-    componentDidMount() {
-        this.GetTargetGroups()
-        this.GetNewsTypes()
-
+    async componentDidMount() {
+        this.props.onLoading(true)
+        await this.GetTargetGroups()
+        await this.GetNewsTypes()
+        this.props.onLoading(false)
     }
     GetNewsTypes = () => {
         const { system, systemid } = this.props.match.params

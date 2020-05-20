@@ -41,25 +41,29 @@ class LoginPage extends React.Component {
         }
     }
     async componentDidMount() {
+        this.props.onLoading(true)
         if (localStorage.getItem("JWT") !== null) {
             this.setState({ login: true })
+            this.props.onLoading(false)
         } else {
             if (new URLSearchParams(this.props.location.search).get("code") !== null) {
                 let data = new FormData()
                 data.append("code", new URLSearchParams(this.props.location.search).get("code"))
                 await axios.post(`${process.env.REACT_APP_BE_PATH}/linelogin`, data)
-                .then((res) => {
+                .then(async(res) => {
                     localStorage.setItem("JWT", res.data)
-                    this.setState({ 
+                    await this.setState({ 
                         login: true 
                     })
+                    this.props.onLoading(false)
                 })
-                .catch(err => {
+                .catch(async err => {
                     if (err.response) {
-                        this.setState({
+                        await this.setState({
                             userid: err.response.data,
                             register: true
                         })
+                        this.props.onLoading(false)
                     }
                 })
             }

@@ -41,12 +41,14 @@ class AllTargetGroupPage extends React.Component {
         }))
     }
 
-    componentDidMount() {
-        this.GetTargetGroups()
+    async componentDidMount() {
+        this.props.onLoading(true)
+        await this.GetTargetGroups()
+        this.props.onLoading(false)
     }
-    GetTargetGroups = () => {
+    GetTargetGroups = async () => {
         const { system, systemid } = this.props.match.params
-        axios.get(`${process.env.REACT_APP_BE_PATH}/targetgroup/all?systemid=${systemid}&systemname=${system}`, {
+        await axios.get(`${process.env.REACT_APP_BE_PATH}/targetgroup/all?systemid=${systemid}&systemname=${system}`, {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }

@@ -20,6 +20,7 @@ class AnnouceNewsPage extends React.Component {
         };
     }
     componentWillMount() {
+        this.props.onLoading(true)
         const { system, systemid } = this.props.match.params
         this.setState(prevState => ({
             data: {
@@ -36,6 +37,7 @@ class AnnouceNewsPage extends React.Component {
             this.setState({
                 targetgroups: res.data
             })
+            this.props.onLoading(false)
         })
     }
     onChangeType = e => {
@@ -49,6 +51,7 @@ class AnnouceNewsPage extends React.Component {
         this.setState({ targetgroup: value })
     }
     onAnnounce = () => {
+        this.props.onLoading(true)
         const { systemid, newsid } = this.props.match.params
         let data = new FormData()
         data.append("newsid", newsid)
@@ -59,6 +62,7 @@ class AnnouceNewsPage extends React.Component {
             }
         }).then(res => {
             console.log(res.data)
+            this.props.onLoading(false)
         })
     }
     render() {

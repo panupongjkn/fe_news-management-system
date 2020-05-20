@@ -31,6 +31,7 @@ class SystemsPage extends React.Component {
     }
 
     componentDidMount() {
+        this.props.onLoading(true)
         let header = {
             Authorization: "Bearer " + localStorage.getItem("JWT")
         }
@@ -38,6 +39,7 @@ class SystemsPage extends React.Component {
             this.setState({
                 systems: res.data
             })
+            this.props.onLoading(false)
         })
     }
     render() {
