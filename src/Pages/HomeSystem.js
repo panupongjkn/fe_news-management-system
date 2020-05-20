@@ -64,26 +64,26 @@ class HomeSystemPage extends React.Component {
         await this.GetNewsTypes()
         this.props.onLoading(false)
     }
-    GetNewsTypes = () => {
+    GetNewsTypes = async () => {
         const { system, systemid } = this.props.match.params
-        axios.get(`${process.env.REACT_APP_BE_PATH}/news/newstype/allnewstype?systemid=${systemid}&systemname=${system}`, {
+        await axios.get(`${process.env.REACT_APP_BE_PATH}/news/newstype/allnewstype?systemid=${systemid}&systemname=${system}`, {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }
-        }).then(res => {
+        }).then(async res => {
             console.log("newstypes", res.data)
-            this.setState({ newstype: res.data })
+            await this.setState({ newstype: res.data })
         })
     }
-    GetTargetGroups = () => {
+    GetTargetGroups = async () => {
         const { system, systemid } = this.props.match.params
-        axios.get(`${process.env.REACT_APP_BE_PATH}/targetgroup/all?systemid=${systemid}&systemname=${system}`, {
+        await axios.get(`${process.env.REACT_APP_BE_PATH}/targetgroup/all?systemid=${systemid}&systemname=${system}`, {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }
-        }).then(res => {
+        }).then( async res => {
             console.log("targetgroup" + res.data)
-            this.setState({ targetgroups: res.data })
+            await this.setState({ targetgroups: res.data })
         })
     }
 

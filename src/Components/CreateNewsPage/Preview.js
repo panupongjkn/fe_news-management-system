@@ -25,7 +25,6 @@ class ReviewComponent extends React.Component {
     }
     render() {
         this.scrollToTop()
-        console.log("news1", this.props)
         return (
             <div>
                 <h3>Preview</h3>

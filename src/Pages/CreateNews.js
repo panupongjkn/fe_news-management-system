@@ -228,6 +228,7 @@ class CreateNewsPage extends React.Component {
         return images
     }
     onCreateNews = async (status) => {
+        this.props.onLoading(true)
         let news = this.state.news
         let images = await this.imagesToBase64()
         let data = {
@@ -243,13 +244,13 @@ class CreateNewsPage extends React.Component {
             systemid: this.state.data.systemid,
             status: status
         }
-        axios.post(`${process.env.REACT_APP_BE_PATH}/news/create`, data, {
+        await axios.post(`${process.env.REACT_APP_BE_PATH}/news/create`, data, {
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }
         }).then(res => {
-            let title = ""
             if (status === "draft") {
+                this.props.onLoading(false)
                 Swal.fire({
                     icon: 'success',
                     title: "Draft news success",
@@ -259,9 +260,10 @@ class CreateNewsPage extends React.Component {
                     this.setState({ redirect: true })
                 })
             } else if (status === "publish") {
+                this.props.onLoading(false)
                 Swal.fire({
                     icon: 'success',
-                    title: "Draft news success",
+                    title: "Create news success",
                     showConfirmButton: true,
                     timer: 3000
                 }).then((result) => {

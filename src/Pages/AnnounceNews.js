@@ -2,6 +2,7 @@ import React from 'react'
 import { Radio, Select } from 'antd'
 import Layout from '../Components/Layout'
 import axios from 'axios'
+import { Redirect } from 'react-router-dom'
 
 const { Option } = Select
 class AnnouceNewsPage extends React.Component {
@@ -17,6 +18,7 @@ class AnnouceNewsPage extends React.Component {
                 page: "",
             },
             targetgroup: "",
+            redirect: false,
         };
     }
     componentWillMount() {
@@ -61,12 +63,14 @@ class AnnouceNewsPage extends React.Component {
                 'Authorization': "Bearer " + localStorage.getItem("JWT")
             }
         }).then(res => {
-            console.log(res.data)
             this.props.onLoading(false)
+            this.setState({redirect: true})
         })
     }
     render() {
-        console.log(this.state)
+        if(this.state.redirect) {
+            return <Redirect push to={`/${this.state.data.system}/${this.state.data.systemid}/news/allnews`}/>
+        }
         return (
             <Layout {...this.props} data={this.state.data}>
                 <Radio.Group name="type" onChange={this.onChangeType} value={this.state.type}>
