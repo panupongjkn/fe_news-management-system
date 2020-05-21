@@ -257,7 +257,7 @@ class CreateNewsPage extends React.Component {
                     showConfirmButton: true,
                     timer: 3000
                 }).then((result) => {
-                    this.setState({ redirect: true })
+                    this.setState({ path:`/${this.state.data.system}/${this.state.data.systemid}/news/allnews`,redirect: true })
                 })
             } else if (status === "publish") {
                 this.props.onLoading(false)

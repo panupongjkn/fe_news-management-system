@@ -111,7 +111,7 @@ class NewsDetail extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="pt-3">
+                        <div className="pt-3 pb-5">
                             <p>Postdate : {postdate}</p>
                             <p className={`${expiredate === "Invalid date" ? "d-none" : ""}`}>Expiredate : {expiredate}</p>
                             <p>

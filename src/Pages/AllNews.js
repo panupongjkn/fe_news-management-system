@@ -138,12 +138,20 @@ class AllNewsPage extends React.Component {
                                             </BoxBody>
                                             {news.author}
                                             <p>{news.postdate}</p>
-                                            <Link to={`/${this.state.data.system}/${this.state.data.systemid}/news/${news.Title}/${news.ID}`}>
-                                                <Button className="btn px-3 d-flex ml-auto">
-                                                    <EyeOutlined className="mr-2 " style={{ fontSize: "16px", paddingTop: "3px" }} />
-                                                    <span style={{ fontSize: "14px" }}>Preview</span>
-                                                </Button>
-                                            </Link>
+                                            <div className="d-flex justify-content-between">
+                                                <Link to={`/${this.state.data.system}/${this.state.data.systemid}/news/${news.ID}/announce`}>
+                                                    <Button className="btn px-3 d-flex ml-auto">
+                                                        <EyeOutlined className="mr-2 " style={{ fontSize: "16px", paddingTop: "3px" }} />
+                                                        <span style={{ fontSize: "14px" }}>Announce</span>
+                                                    </Button>
+                                                </Link>
+                                                <Link to={`/${this.state.data.system}/${this.state.data.systemid}/news/${news.Title}/${news.ID}`}>
+                                                    <Button className="btn px-3 d-flex ml-auto">
+                                                        <EyeOutlined className="mr-2 " style={{ fontSize: "16px", paddingTop: "3px" }} />
+                                                        <span style={{ fontSize: "14px" }}>View</span>
+                                                    </Button>
+                                                </Link>
+                                            </div>
                                         </BoxNews>
                                     </div>
                                 )

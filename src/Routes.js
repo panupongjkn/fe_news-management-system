@@ -44,7 +44,7 @@ class Routes extends React.Component {
             <Router>
                 <Loading display={this.state.loading}/>
                 <Switch>
-                    <Route path="/line/:system/:systemid/register" render={(props) => <RegisterLine {...props} />} />
+                    <Route path="/line/:system/:systemid/register" render={(props) => <RegisterLine onLoading={this.onLoading} {...props} />} />
                     <Route path="/line/news/:newsid" render={(props) => <NewsPage onLoading={this.onLoading} {...props} />} />
                     <Route path="/login" render={(props) => <LoginPage onLoading={this.onLoading} {...props} />} />
                     <Route path="/register" render={(props) => <RegisterPage onLoading={this.onLoading} {...props} />} />

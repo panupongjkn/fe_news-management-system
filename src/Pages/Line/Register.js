@@ -199,6 +199,7 @@ class Register extends React.Component {
         })
     }
     onRegister = async () => {
+        this.props.onLoading(true)
         let userinterest = await this.state.newstype.filter(function (newstype) {
             return newstype.selected;
         });
@@ -222,9 +223,10 @@ class Register extends React.Component {
             line: this.state.line.userId,
             systemid: this.state.systemid
         }
-        axios.post(`${process.env.REACT_APP_BE_PATH}/line/register`, data).then((res) => {
+        await axios.post(`${process.env.REACT_APP_BE_PATH}/line/register`, data).then((res) => {
             liff.closeWindow()
         }).catch(err => {
+            this.props.onLoading(false)
             liff.closeWindow()
         })
     }
