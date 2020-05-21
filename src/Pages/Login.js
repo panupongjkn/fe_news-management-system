@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
-import {ButtonLogin} from '../Components/Login/Button'
+import { ButtonLogin } from '../Components/Login/Button'
 
 const Page = styled.div`
     height: 100vh;
@@ -23,11 +23,11 @@ const Content = styled.div`
     }
 `
 const ImageContent = styled.img`
-    height: 100vh;
+    height: 80vh;
     width: auto;
     @media screen and (max-width 1200px) {
         height: auto;
-        width: 100%;
+        width: 80%;
     }
 `
 
@@ -50,22 +50,24 @@ class LoginPage extends React.Component {
                 let data = new FormData()
                 data.append("code", new URLSearchParams(this.props.location.search).get("code"))
                 await axios.post(`${process.env.REACT_APP_BE_PATH}/linelogin`, data)
-                .then(async(res) => {
-                    localStorage.setItem("JWT", res.data)
-                    await this.setState({ 
-                        login: true 
-                    })
-                    this.props.onLoading(false)
-                })
-                .catch(async err => {
-                    if (err.response) {
+                    .then(async (res) => {
+                        localStorage.setItem("JWT", res.data)
                         await this.setState({
-                            userid: err.response.data,
-                            register: true
+                            login: true
                         })
                         this.props.onLoading(false)
-                    }
-                })
+                    })
+                    .catch(async err => {
+                        if (err.response) {
+                            await this.setState({
+                                userid: err.response.data,
+                                register: true
+                            })
+                            this.props.onLoading(false)
+                        }
+                    })
+            } else {
+                this.props.onLoading(false)
             }
         }
     }
@@ -80,13 +82,13 @@ class LoginPage extends React.Component {
             <div className="col-12">
                 {new URLSearchParams(this.props.location.search).get("code") ? "" :
                     <div className='row'>
-                        <div className='col-7 d-none d-sm-block text-center'>
-                            <ImageContent src="image/pic news.png" alt="pic news" />
+                        <div className='col-8 d-none d-sm-block text-center pt-5'>
+                            <ImageContent src="image/pic-regis 1.png" alt="pic news" />
                         </div>
-                        <Page className="col-12 col-sm-5">
+                        <Page className="col-12 col-sm-4">
                             <Content className="col-10 p-0">
                                 <div className="col-8 p-0 mx-auto d-sm-none">
-                                    <img src="image/pic news.png" alt="pic news" width="100%" />
+                                    <img src="image/pic-regis 1.png" alt="pic news" width="100%" />
                                 </div>
                                 <h3 className="text-center"><b>SIGN IN</b></h3>
                                 <div className="col-10 p-0 mx-auto">
