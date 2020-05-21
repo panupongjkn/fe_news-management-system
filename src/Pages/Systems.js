@@ -11,6 +11,7 @@ const SystemBox = styled.div`
     height: 150px;
     background-color:white;
     cursor:pointer;
+    color: black;
     `
 const Background = styled.div`
  min-height: 100vh;
@@ -54,9 +55,10 @@ class SystemsPage extends React.Component {
                                 <div className='row'>
                                     <div className='col-4 p-2'>
                                         <Link to="/system/create">
-                                            <SystemBox className='p-3 rounded shadow-sm'>
-                                                +
-                                                Add System
+                                            <SystemBox className='p-3 rounded shadow-sm text-center pt-5'>
+                                                <h5>
+                                                    +<br />Add System
+                                                </h5>
                                             </SystemBox>
                                         </Link>
                                     </div>
@@ -64,8 +66,8 @@ class SystemsPage extends React.Component {
                                         return (
                                             <div className='col-4 p-2'>
                                                 <a href={`/${system.SystemName}/${system.ID}/home`}>
-                                                    <SystemBox className='p-3 rounded shadow-sm'>
-                                                        {system.SystemName}
+                                                    <SystemBox className='p-3 rounded shadow-sm text-center pt-5'>
+                                                        <h5 className="pt-3">{system.SystemName}</h5>
                                                     </SystemBox>
                                                 </a>
                                             </div>

@@ -48,7 +48,7 @@ class Navbar extends React.Component {
                 {...this.props}
             >
                 <Link to='/' className={`navbar-brand p-0 ${page === "" ? "d-none" : ""}`}>
-                    <img src="/image/pic news.png" alt="News Management System" width="35px" height="35px" />
+                    <img src="/image/pic-regis 1.png" alt="News Management System" width="35px" height="35px" />
                     <span className="ml-2" style={{ fontSize: "20px" }}>News Management System</span>
                 </Link>
                 <div>
