@@ -134,16 +134,16 @@ class Register extends React.Component {
         }
     }
     async componentDidMount() {
-        // await liff.init({ liffId: "1654010598-xR8ZnwJ2" })
-        // const profile = await liff.getProfile()
+        await liff.init({ liffId: "1654010598-xR8ZnwJ2" })
+        const profile = await liff.getProfile()
         const { system, systemid } = this.props.match.params
         await this.setState({
-            // line: {
-            //     displayName: profile.displayName,
-            //     userId: profile.userId,
-            //     pictureUrl: profile.pictureUrl,
-            //     email: liff.getDecodedIDToken().email
-            // },
+            line: {
+                displayName: profile.displayName,
+                userId: profile.userId,
+                pictureUrl: profile.pictureUrl,
+                email: liff.getDecodedIDToken().email
+            },
             systemid: systemid
         })
         await axios.get(`${process.env.REACT_APP_BE_PATH}/role/all?systemname=${system}&systemid=${systemid}`).then(async res => {
@@ -265,6 +265,7 @@ class Register extends React.Component {
                 line: this.state.line.userId,
                 systemid: this.state.systemid
             }
+            this.props.onLoading(true)
             axios.post(`${process.env.REACT_APP_BE_PATH}/line/register`, data).then((res) => {
                 this.props.onLoading(false)
                 liff.closeWindow()
@@ -272,7 +273,6 @@ class Register extends React.Component {
                 this.props.onLoading(false)
                 liff.closeWindow()
             })
-            this.props.onLoading(true)
         }
     }
     render() {
