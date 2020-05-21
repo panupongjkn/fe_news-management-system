@@ -278,8 +278,6 @@ class Register extends React.Component {
     render() {
         return (
             <div>
-                <p>check data : {this.state.line.userId}</p>
-                <p>check data : {this.state.line.userId}</p>
                 {this.showComponent()}
             </div>
         )
