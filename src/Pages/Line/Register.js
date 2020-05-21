@@ -265,13 +265,14 @@ class Register extends React.Component {
                 line: this.state.line.userId,
                 systemid: this.state.systemid
             }
-            this.props.onLoading(true)
-            await axios.post(`${process.env.REACT_APP_BE_PATH}/line/register`, data).then((res) => {
+            axios.post(`${process.env.REACT_APP_BE_PATH}/line/register`, data).then((res) => {
+                this.props.onLoading(false)
                 liff.closeWindow()
             }).catch(err => {
                 this.props.onLoading(false)
                 liff.closeWindow()
             })
+            this.props.onLoading(true)
         }
     }
     render() {
