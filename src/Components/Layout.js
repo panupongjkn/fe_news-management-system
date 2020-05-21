@@ -54,7 +54,7 @@ class SiderDemo extends React.Component {
                             onClick={() => this.props.history.push(`/systems`)}
                             key="0"
                             className="pl-4 pt-2" style={{ height: "60px" }}
-                            icon={<img alt="News Management System" className="mr-2" src="/image/pic news.png" width="35px" height="35px" />}
+                            icon={<img alt="News Management System" className="mr-2" src="/image/pic-regis 1.png" width="35px" height="35px" />}
                         >
                             <span className={`${this.state.collapsed ? "d-none" : ""}`}>
                                 News Management System
